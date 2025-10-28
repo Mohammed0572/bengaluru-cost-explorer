@@ -1,0 +1,4 @@
+project_id = "hvxvvnvdplwirrluxuuy"
+
+[functions.cost-of-living]
+verify_jwt = false
