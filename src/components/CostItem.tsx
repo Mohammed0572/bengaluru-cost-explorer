@@ -7,9 +7,10 @@ interface CostItemProps {
   maxPrice: number;
   avgPrice: number;
   unit: string;
+  area?: string;
 }
 
-export const CostItem = ({ item, minPrice, maxPrice, avgPrice, unit }: CostItemProps) => {
+export const CostItem = ({ item, minPrice, maxPrice, avgPrice, unit, area }: CostItemProps) => {
   const range = maxPrice - minPrice;
   const avgPosition = range > 0 ? ((avgPrice - minPrice) / range) * 100 : 50;
 
@@ -18,9 +19,14 @@ export const CostItem = ({ item, minPrice, maxPrice, avgPrice, unit }: CostItemP
       <div className="space-y-4">
         {/* Item name and average price */}
         <div className="flex justify-between items-start">
-          <h4 className="font-medium text-foreground group-hover:text-primary transition-colors">
-            {item}
-          </h4>
+          <div className="flex-1">
+            <h4 className="font-medium text-foreground group-hover:text-primary transition-colors">
+              {item}
+            </h4>
+            {area && (
+              <p className="text-xs text-muted-foreground mt-1">📍 {area}</p>
+            )}
+          </div>
           <div className="text-right">
             <div className="text-xl font-bold text-primary">
               {avgPrice.toLocaleString()} {unit}

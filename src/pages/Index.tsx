@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { Home, UtensilsCrossed, Car, Zap, Gamepad2, Search } from "lucide-react";
 import { CategoryCard } from "@/components/CategoryCard";
 import { CostItem } from "@/components/CostItem";
+import { AreaSelector } from "@/components/AreaSelector";
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/hooks/use-toast";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -14,6 +15,7 @@ interface CostData {
   maxPrice: number;
   avgPrice: number;
   unit: string;
+  area: string;
 }
 
 const categories = [
@@ -27,20 +29,23 @@ const categories = [
 
 const Index = () => {
   const [activeCategory, setActiveCategory] = useState("All");
+  const [selectedArea, setSelectedArea] = useState("All Areas");
   const [searchTerm, setSearchTerm] = useState("");
   const [costData, setCostData] = useState<CostData[]>([]);
+  const [areas, setAreas] = useState<string[]>(["All Areas"]);
   const [loading, setLoading] = useState(true);
   const { toast } = useToast();
 
   useEffect(() => {
     fetchCostData();
-  }, [activeCategory, searchTerm]);
+  }, [activeCategory, selectedArea, searchTerm]);
 
   const fetchCostData = async () => {
     setLoading(true);
     try {
       const params = new URLSearchParams();
       if (activeCategory !== "All") params.append("category", activeCategory);
+      if (selectedArea !== "All Areas") params.append("area", selectedArea);
       if (searchTerm) params.append("search", searchTerm);
 
       const response = await fetch(
@@ -57,6 +62,9 @@ const Index = () => {
       const result = await response.json();
       if (result.success) {
         setCostData(result.data);
+        if (result.summary?.areas) {
+          setAreas(result.summary.areas);
+        }
       }
     } catch (error) {
       console.error("Error fetching cost data:", error);
@@ -103,8 +111,19 @@ const Index = () => {
         </header>
       </div>
 
+      {/* Area Selector */}
+      <section className="container mx-auto px-4 pb-8">
+        <div className="flex justify-center">
+          <AreaSelector
+            areas={areas}
+            selectedArea={selectedArea}
+            onAreaChange={setSelectedArea}
+          />
+        </div>
+      </section>
+
       {/* Categories */}
-      <section className="container mx-auto px-4 py-12">
+      <section className="container mx-auto px-4 py-8">
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
           {categories.map((category) => (
             <CategoryCard
@@ -125,6 +144,7 @@ const Index = () => {
         <div className="mb-6">
           <h2 className="text-3xl font-bold mb-2">
             {activeCategory === "All" ? "All Items" : activeCategory}
+            {selectedArea !== "All Areas" && ` in ${selectedArea}`}
           </h2>
           <p className="text-muted-foreground">
             {costData.length} items found
@@ -151,6 +171,7 @@ const Index = () => {
                 maxPrice={item.maxPrice}
                 avgPrice={item.avgPrice}
                 unit={item.unit}
+                area={item.area}
               />
             ))}
           </div>
