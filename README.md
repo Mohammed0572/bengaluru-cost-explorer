@@ -18,6 +18,7 @@ This project was developed and analyzed by:
 * **Pranav**
 * **Supreeth**
 * **Rohith R.**
+
 Under the guidance of the faculty at **K.S. School of Engineering and Management, Bengaluru**.
 
 ---
