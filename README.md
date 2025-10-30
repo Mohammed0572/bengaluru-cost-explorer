@@ -124,7 +124,3 @@ Based on general data, we also analyzed the estimated budgets for other demograp
 | **Total** | **~ ₹60,000 - ₹1,30,000+** | |
 
 ---
-
-## 🔧 Project Structure
-
-*(You can customize this section based on your project files)*
