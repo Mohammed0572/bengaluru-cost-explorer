@@ -8,6 +8,10 @@ This project aims to provide a comprehensive analysis of the cost of living in B
 
 Our analysis collects and visualizes data across key expense categories to present a clear and actionable budget breakdown.
 
+## 🎯 Project Domain
+
+The core domain of this project is **Data Visualization & Analytics**. We are focused on taking raw data about living expenses, processing it, and presenting it in an interactive and easy-to-understand visual format (charts, graphs, and tables).
+
 ---
 
 ## 👥 Team Members
@@ -18,8 +22,7 @@ This project was developed and analyzed by:
 * **Pranav**
 * **Supreeth**
 * **Rohith.R**
-
-Under the guidance of the faculty of **Seema Bawgi**.
+Under the guidance of the faculty at **K.S. School of Engineering and Management, Bengaluru**.
 
 ---
 
