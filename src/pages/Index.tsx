@@ -1,9 +1,11 @@
 import { useState, useEffect } from "react";
-import { Home, UtensilsCrossed, Car, Zap, Gamepad2, Search } from "lucide-react";
+import { Home, UtensilsCrossed, Car, Zap, Gamepad2, Search, Info, Mail } from "lucide-react";
+import { Link } from "react-router-dom";
 import { CategoryCard } from "@/components/CategoryCard";
 import { CostItem } from "@/components/CostItem";
 import { AreaSelector } from "@/components/AreaSelector";
 import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
 import { Skeleton } from "@/components/ui/skeleton";
 
@@ -85,6 +87,27 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      {/* Navigation */}
+      <nav className="border-b bg-card/50 backdrop-blur-sm sticky top-0 z-50">
+        <div className="container mx-auto px-4 py-4 flex items-center gap-4">
+          <Link to="/">
+            <Button variant="ghost" size="icon">
+              <Home className="h-5 w-5" />
+            </Button>
+          </Link>
+          <Link to="/about">
+            <Button variant="ghost" size="icon">
+              <Info className="h-5 w-5" />
+            </Button>
+          </Link>
+          <Link to="/contact">
+            <Button variant="ghost" size="icon">
+              <Mail className="h-5 w-5" />
+            </Button>
+          </Link>
+        </div>
+      </nav>
+
       {/* Hero Section with Gradient */}
       <div className="relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-br from-primary/20 via-secondary/20 to-accent/20 blur-3xl" />
