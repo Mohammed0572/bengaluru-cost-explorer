@@ -1,61 +1,83 @@
-# Welcome to your Lovable project
+# 📊 Cost of Living Analysis: Bengaluru
 
-## Project info
+A group project by students of K.S. School of Engineering and Management, analyzing the monthly expenses for individuals living in Bengaluru.
 
-**URL**: https://costinbengaluru.netlify.app/
+## 📍 Project Overview
 
-## How can I edit this code?
+This project aims to provide a comprehensive analysis of the cost of living in Bengaluru, Karnataka. As one of India's fastest-growing metropolitan cities and a major IT hub, understanding the financial landscape is crucial for students, working professionals, and families looking to move to the city.
 
-There are several ways of editing your application.
+Our analysis collects and visualizes data across key expense categories to present a clear and actionable budget breakdown.
 
-**Use Lovable**
+---
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/1b968435-3645-48c0-96d9-8d450fd27d7e) and start prompting.
+## 👥 Team Members
 
-Changes made via Lovable will be committed automatically to this repo.
+This project was developed and analyzed by:
 
-**Use your preferred IDE**
+* **Syed**
+* **Supreeth**
+* **Rohith R.**
+* **Pranav**
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+Under the guidance of the faculty at **K.S. School of Engineering and Management, Bengaluru**.
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+---
 
-Follow these steps:
+## 📈 Key Findings: Student Budget
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+Our analysis focuses primarily on the budget for a student living in Bengaluru. We find that the average monthly cost of living for a student ranges from **₹14,000 to ₹30,000**.
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+This wide range depends heavily on the type of accommodation and lifestyle choices.
 
-# Step 3: Install the necessary dependencies.
-npm i
+### Monthly Expense Breakdown (Student)
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
-```
+| Category | Estimated Cost (INR) | Notes |
+| :--- | :--- | :--- |
+| **🏠 Accommodation** | ₹7,000 - ₹16,000 | Varies greatly. PGs (Twin-sharing) are common. |
+| **🍲 Food** | ₹3,500 - ₹6,000 | Includes mess food, self-cooking, or eating out. |
+| **🚌 Transportation** | ₹1,000 - ₹2,000 | Primarily for a BMTC student bus pass and occasional metro/auto rides. |
+| **📚 Miscellaneous** | ₹2,000 - ₹5,000 | Includes utilities, mobile recharge, stationery, and social outings. |
+| **Total** | **~ ₹14,000 - ₹30,000** | |
 
-**Edit a file directly in GitHub**
+---
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+## 📈 Additional Budget Breakdowns (Non-Student)
 
-**Use GitHub Codespaces**
+Based on general data, we also analyzed the estimated budgets for other demographics.
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+### Monthly Expense Breakdown (Bachelor / Single Professional)
 
-## What technologies are used for this project?
+| Category | Estimated Cost (INR) | Notes |
+| :--- | :--- | :--- |
+| **🏠 Accommodation** | ₹10,000 - ₹20,000+ | 1BHK apartment or a single-room PG. |
+| **🍲 Food** | ₹6,000 - ₹9,000 | Cooking at home plus eating out. |
+| **🚌 Transportation** | ₹2,000 - ₹4,000 | Public transport, bike-taxis, and cabs. |
+| **💡 Misc. & Utilities**| ₹3,000 - ₹6,000 | Wi-Fi, electricity, and social outings. |
+| **Total** | **~ ₹20,000 - ₹35,000** | |
 
-This project is built with:
+### Monthly Expense Breakdown (Couple)
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+| Category | Estimated Cost (INR) | Notes |
+| :--- | :--- | :--- |
+| **🏠 Accommodation** | ₹18,000 - ₹35,000+ | 1BHK or 2BHK apartment. |
+| **🍲 Food & Groceries** | ₹9,000 - ₹15,000 | Groceries and weekend dining. |
+| **🚌 Transportation** | ₹3,000 - ₹6,000 | Cabs or personal vehicle. |
+| **💡 Misc. & Utilities**| ₹5,000 - ₹12,000 | Includes domestic help, Wi-Fi, etc. |
+| **Total** | **~ ₹40,000 - ₹70,000** | |
+
+### Monthly Expense Breakdown (Family - e.g., Couple + 1 Child)
+
+| Category | Estimated Cost (INR) | Notes |
+| :--- | :--- | :--- |
+| **🏠 Accommodation** | ₹25,000 - ₹50,000+ | 2BHK or 3BHK apartment. |
+| **🍲 Food & Groceries** | ₹12,000 - ₹20,000 | |
+| **🎓 Schooling** | ₹7,000 - ₹25,000+ | This is a major variable cost. |
+| **🚗 Transportation** | ₹5,000 - ₹10,000 | Often includes a personal vehicle. |
+| **💡 Misc. & Utilities**| ₹10,000 - ₹20,000 | Includes domestic help, activities, etc. |
+| **Total** | **~ ₹60,000 - ₹1,30,000+** | |
+
+---
+
+## 🔧 Project Structure
+
+*(You can customize this section based on your project files)*
