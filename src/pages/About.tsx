@@ -35,20 +35,28 @@ const About = () => {
           
           <div className="prose prose-lg max-w-none">
             <p className="text-xl text-muted-foreground mb-6">
-              Welcome to our Cost of Living platform for Bengaluru, India.
+              Welcome to our Bengaluru Cost of Living guide!
             </p>
             
             <div className="space-y-6 text-foreground/90">
               <p>
-                We provide comprehensive and up-to-date information about the cost of living across different areas in Bengaluru. Our platform helps residents, newcomers, and businesses make informed decisions about where to live and work in the city.
+                We are a team of 5th-semester Computer Science and Business Systems (CSBS) students from KS School of Engineering and Management. We created this platform to provide clear, comprehensive, and up-to-date information on living expenses across Bengaluru.
               </p>
               
               <p>
-                Our data covers essential categories including housing, food, transportation, utilities, and entertainment, giving you a complete picture of expenses in various neighborhoods throughout Bengaluru.
+                Our mission is to help residents, newcomers, and businesses make informed decisions about living and working in this dynamic city. We provide a detailed breakdown of costs across various neighborhoods, covering essential categories like:
               </p>
               
+              <ul className="list-disc list-inside space-y-2 ml-4">
+                <li>Housing</li>
+                <li>Food</li>
+                <li>Transportation</li>
+                <li>Utilities</li>
+                <li>Entertainment</li>
+              </ul>
+              
               <p>
-                Whether you're planning to move to Bengaluru, considering a different neighborhood, or simply curious about living costs, our platform provides the insights you need.
+                Whether you're planning a move, considering a new neighborhood, or simply curious about expenses, our platform offers the insights you need.
               </p>
             </div>
           </div>
