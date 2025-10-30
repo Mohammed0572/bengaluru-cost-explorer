@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
-import { Home, UtensilsCrossed, Car, Zap, Gamepad2, Search, Info, Mail } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Home, UtensilsCrossed, Car, Zap, Gamepad2, Search, Info, Mail, LogIn, LogOut, BarChart3 } from "lucide-react";
+import { Link, useNavigate } from "react-router-dom";
 import { CategoryCard } from "@/components/CategoryCard";
 import { CostItem } from "@/components/CostItem";
 import { AreaSelector } from "@/components/AreaSelector";
@@ -8,6 +8,10 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
 import { Skeleton } from "@/components/ui/skeleton";
+import { supabase } from "@/integrations/supabase/client";
+import { User, Session } from '@supabase/supabase-js';
+import { CostCharts } from "@/components/CostCharts";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 interface CostData {
   id: string;
@@ -36,7 +40,28 @@ const Index = () => {
   const [costData, setCostData] = useState<CostData[]>([]);
   const [areas, setAreas] = useState<string[]>(["All Areas"]);
   const [loading, setLoading] = useState(true);
+  const [user, setUser] = useState<User | null>(null);
+  const [session, setSession] = useState<Session | null>(null);
   const { toast } = useToast();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    // Set up auth state listener
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(
+      (event, session) => {
+        setSession(session);
+        setUser(session?.user ?? null);
+      }
+    );
+
+    // Check for existing session
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setSession(session);
+      setUser(session?.user ?? null);
+    });
+
+    return () => subscription.unsubscribe();
+  }, []);
 
   useEffect(() => {
     fetchCostData();
@@ -85,6 +110,22 @@ const Index = () => {
     return costData.filter((item) => item.category === categoryName).length;
   };
 
+  const handleSignOut = async () => {
+    const { error } = await supabase.auth.signOut();
+    if (error) {
+      toast({
+        title: "Error",
+        description: "Failed to sign out",
+        variant: "destructive",
+      });
+    } else {
+      toast({
+        title: "Signed out",
+        description: "You have been signed out successfully",
+      });
+    }
+  };
+
   return (
     <div className="min-h-screen bg-background">
       {/* Navigation */}
@@ -112,6 +153,23 @@ const Index = () => {
                 <span className="hidden sm:inline">Contact</span>
               </Button>
             </Link>
+            {user ? (
+              <Button 
+                variant="ghost" 
+                className="gap-2 hover:bg-primary/10 transition-all"
+                onClick={handleSignOut}
+              >
+                <LogOut className="h-4 w-4" />
+                <span className="hidden sm:inline">Sign Out</span>
+              </Button>
+            ) : (
+              <Link to="/auth">
+                <Button variant="ghost" className="gap-2 hover:bg-primary/10 transition-all">
+                  <LogIn className="h-4 w-4" />
+                  <span className="hidden sm:inline">Sign In</span>
+                </Button>
+              </Link>
+            )}
           </div>
         </div>
       </nav>
@@ -170,43 +228,75 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Cost Items Grid */}
+      {/* Data Visualization Tabs */}
       <section className="container mx-auto px-4 pb-16">
-        <div className="mb-6">
-          <h2 className="text-3xl font-bold mb-2">
-            {activeCategory === "All" ? "All Items" : activeCategory}
-            {selectedArea !== "All Areas" && ` in ${selectedArea}`}
-          </h2>
-          <p className="text-muted-foreground">
-            {costData.length} items found
-          </p>
-        </div>
+        <Tabs defaultValue="grid" className="w-full">
+          <div className="flex items-center justify-between mb-6">
+            <div>
+              <h2 className="text-3xl font-bold mb-2">
+                {activeCategory === "All" ? "All Items" : activeCategory}
+                {selectedArea !== "All Areas" && ` in ${selectedArea}`}
+              </h2>
+              <p className="text-muted-foreground">
+                {costData.length} items found
+              </p>
+            </div>
+            <TabsList>
+              <TabsTrigger value="grid" className="gap-2">
+                <Home className="h-4 w-4" />
+                Grid View
+              </TabsTrigger>
+              <TabsTrigger value="charts" className="gap-2">
+                <BarChart3 className="h-4 w-4" />
+                Charts
+              </TabsTrigger>
+            </TabsList>
+          </div>
 
-        {loading ? (
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {[...Array(6)].map((_, i) => (
-              <Skeleton key={i} className="h-40 rounded-2xl" />
-            ))}
-          </div>
-        ) : costData.length === 0 ? (
-          <div className="text-center py-16">
-            <p className="text-muted-foreground text-lg">No items found</p>
-          </div>
-        ) : (
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {costData.map((item) => (
-              <CostItem
-                key={item.id}
-                item={item.item}
-                minPrice={item.minPrice}
-                maxPrice={item.maxPrice}
-                avgPrice={item.avgPrice}
-                unit={item.unit}
-                area={item.area}
-              />
-            ))}
-          </div>
-        )}
+          <TabsContent value="grid">
+            {loading ? (
+              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {[...Array(6)].map((_, i) => (
+                  <Skeleton key={i} className="h-40 rounded-2xl" />
+                ))}
+              </div>
+            ) : costData.length === 0 ? (
+              <div className="text-center py-16">
+                <p className="text-muted-foreground text-lg">No items found</p>
+              </div>
+            ) : (
+              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {costData.map((item) => (
+                  <CostItem
+                    key={item.id}
+                    item={item.item}
+                    minPrice={item.minPrice}
+                    maxPrice={item.maxPrice}
+                    avgPrice={item.avgPrice}
+                    unit={item.unit}
+                    area={item.area}
+                  />
+                ))}
+              </div>
+            )}
+          </TabsContent>
+
+          <TabsContent value="charts">
+            {loading ? (
+              <div className="space-y-8">
+                {[...Array(3)].map((_, i) => (
+                  <Skeleton key={i} className="h-96 rounded-2xl" />
+                ))}
+              </div>
+            ) : costData.length === 0 ? (
+              <div className="text-center py-16">
+                <p className="text-muted-foreground text-lg">No data available for charts</p>
+              </div>
+            ) : (
+              <CostCharts data={costData} />
+            )}
+          </TabsContent>
+        </Tabs>
       </section>
     </div>
   );
