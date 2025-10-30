@@ -17,7 +17,7 @@ This project was developed and analyzed by:
 * **Syed**
 * **Pranav**
 * **Supreeth**
-* **Rohith R.**
+* **Rohith.R**
 
 Under the guidance of the faculty of **Seema Bawgi**.
 
