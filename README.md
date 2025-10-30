@@ -6,6 +6,8 @@ A group project by students of K.S. School of Engineering and Management, analyz
 
 This project aims to provide a comprehensive analysis of the cost of living in Bengaluru, Karnataka. As one of India's fastest-growing metropolitan cities and a major IT hub, understanding the financial landscape is crucial for students, working professionals, and families looking to move to the city.
 
+Project URL: https://costinbengaluru.netlify.app/
+
 Our analysis collects and visualizes data across key expense categories to present a clear and actionable budget breakdown.
 
 ## 🎯 Project Domain
