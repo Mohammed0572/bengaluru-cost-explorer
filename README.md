@@ -15,7 +15,7 @@ Our analysis collects and visualizes data across key expense categories to prese
 This project was developed and analyzed by:
 
 * **Syed**
-* * **Pranav**
+* **Pranav**
 * **Supreeth**
 * **Rohith R**
 
