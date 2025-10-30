@@ -19,7 +19,7 @@ This project was developed and analyzed by:
 * **Supreeth**
 * **Rohith R.**
 
-Under the guidance of the faculty at **K.S. School of Engineering and Management, Bengaluru**.
+Under the guidance of the faculty of ** Seema Bawgi**.
 
 ---
 
