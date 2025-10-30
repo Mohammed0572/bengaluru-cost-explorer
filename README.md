@@ -23,7 +23,7 @@ This project was developed and analyzed by:
 * **Supreeth**
 * **Rohith.R**
 
-Under the guidance of the faculty at **Seema Bawgi**.
+Under the guidance of the faculty of **Seema Bawgi**.
 
 ---
 
