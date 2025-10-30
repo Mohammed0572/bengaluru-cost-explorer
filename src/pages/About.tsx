@@ -6,23 +6,31 @@ const About = () => {
   return (
     <div className="min-h-screen bg-background">
       {/* Navigation */}
-      <nav className="border-b bg-card/50 backdrop-blur-sm sticky top-0 z-50">
-        <div className="container mx-auto px-4 py-4 flex items-center gap-4">
-          <Link to="/">
-            <Button variant="ghost" size="icon">
-              <Home className="h-5 w-5" />
-            </Button>
-          </Link>
-          <Link to="/about">
-            <Button variant="ghost" size="icon">
-              <Info className="h-5 w-5" />
-            </Button>
-          </Link>
-          <Link to="/contact">
-            <Button variant="ghost" size="icon">
-              <Mail className="h-5 w-5" />
-            </Button>
-          </Link>
+      <nav className="border-b bg-gradient-to-r from-card/50 to-card/30 backdrop-blur-md sticky top-0 z-50 shadow-sm">
+        <div className="container mx-auto px-4 py-4 flex items-center justify-between">
+          <h2 className="text-xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
+            Bengaluru Cost of Living
+          </h2>
+          <div className="flex items-center gap-2">
+            <Link to="/">
+              <Button variant="ghost" className="gap-2 hover:bg-primary/10 transition-all">
+                <Home className="h-4 w-4" />
+                <span className="hidden sm:inline">Home</span>
+              </Button>
+            </Link>
+            <Link to="/about">
+              <Button variant="ghost" className="gap-2 hover:bg-primary/10 transition-all">
+                <Info className="h-4 w-4" />
+                <span className="hidden sm:inline">About</span>
+              </Button>
+            </Link>
+            <Link to="/contact">
+              <Button variant="ghost" className="gap-2 hover:bg-primary/10 transition-all">
+                <Mail className="h-4 w-4" />
+                <span className="hidden sm:inline">Contact</span>
+              </Button>
+            </Link>
+          </div>
         </div>
       </nav>
 
