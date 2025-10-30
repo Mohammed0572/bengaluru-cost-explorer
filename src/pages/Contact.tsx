@@ -43,15 +43,15 @@ const Contact = () => {
               <Mail className="h-8 w-8 mb-4 text-primary" />
               <h3 className="text-xl font-semibold mb-2">Email</h3>
               <p className="text-muted-foreground">
-                contact@costoflivingbengaluru.com
+                pranavarun19@gmail.com
               </p>
             </Card>
 
             <Card className="p-6">
               <Info className="h-8 w-8 mb-4 text-primary" />
-              <h3 className="text-xl font-semibold mb-2">Support</h3>
+              <h3 className="text-xl font-semibold mb-2">Phone</h3>
               <p className="text-muted-foreground">
-                We typically respond within 24 hours
+                +91 70191 07903
               </p>
             </Card>
           </div>
