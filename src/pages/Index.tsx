@@ -199,7 +199,7 @@ const Index = () => {
         <div className="absolute inset-0 bg-gradient-to-br from-primary/20 via-secondary/20 to-accent/20 blur-3xl" />
         
         <header className="relative z-10 container mx-auto px-4 py-16 text-center">
-          <h1 className="text-5xl md:text-7xl font-bold mb-4 bg-gradient-to-r from-primary via-secondary to-accent bg-clip-text text-transparent">
+          <h1 className="text-5xl md:text-7xl font-bold mb-4 bg-gradient-to-r from-primary via-secondary to-accent bg-clip-text text-transparent leading-tight pb-2">
             Cost of Living
           </h1>
           <p className="text-xl text-muted-foreground mb-8">
