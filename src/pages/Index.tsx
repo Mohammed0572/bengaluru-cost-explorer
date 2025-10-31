@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Home, UtensilsCrossed, Car, Zap, Gamepad2, Search, Info, Mail, LogIn, LogOut, BarChart3 } from "lucide-react";
+import { Home, UtensilsCrossed, Car, Zap, Gamepad2, Search, Info, Mail, LogIn, LogOut, BarChart3, ArrowUpDown } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import { CategoryCard } from "@/components/CategoryCard";
 import { CostItem } from "@/components/CostItem";
@@ -12,6 +12,8 @@ import { supabase } from "@/integrations/supabase/client";
 import { User, Session } from '@supabase/supabase-js';
 import { CostCharts } from "@/components/CostCharts";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { ThemeToggle } from "@/components/ThemeToggle";
 
 interface CostData {
   id: string;
@@ -42,6 +44,7 @@ const Index = () => {
   const [loading, setLoading] = useState(true);
   const [user, setUser] = useState<User | null>(null);
   const [session, setSession] = useState<Session | null>(null);
+  const [sortBy, setSortBy] = useState<string>("name");
   const { toast } = useToast();
   const navigate = useNavigate();
 
@@ -126,6 +129,22 @@ const Index = () => {
     }
   };
 
+  const getSortedData = () => {
+    const sorted = [...costData];
+    switch (sortBy) {
+      case "name":
+        return sorted.sort((a, b) => a.item.localeCompare(b.item));
+      case "price-low":
+        return sorted.sort((a, b) => a.avgPrice - b.avgPrice);
+      case "price-high":
+        return sorted.sort((a, b) => b.avgPrice - a.avgPrice);
+      case "category":
+        return sorted.sort((a, b) => a.category.localeCompare(b.category));
+      default:
+        return sorted;
+    }
+  };
+
   return (
     <div className="min-h-screen bg-background">
       {/* Navigation */}
@@ -170,6 +189,7 @@ const Index = () => {
                 </Button>
               </Link>
             )}
+            <ThemeToggle />
           </div>
         </div>
       </nav>
@@ -231,7 +251,7 @@ const Index = () => {
       {/* Data Visualization Tabs */}
       <section className="container mx-auto px-4 pb-16">
         <Tabs defaultValue="grid" className="w-full">
-          <div className="flex items-center justify-between mb-6">
+          <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 mb-6">
             <div>
               <h2 className="text-3xl font-bold mb-2">
                 {activeCategory === "All" ? "All Items" : activeCategory}
@@ -241,7 +261,20 @@ const Index = () => {
                 {costData.length} items found
               </p>
             </div>
-            <TabsList>
+            <div className="flex items-center gap-3">
+              <Select value={sortBy} onValueChange={setSortBy}>
+                <SelectTrigger className="w-[180px]">
+                  <ArrowUpDown className="mr-2 h-4 w-4" />
+                  <SelectValue placeholder="Sort by" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="name">Name (A-Z)</SelectItem>
+                  <SelectItem value="price-low">Price (Low to High)</SelectItem>
+                  <SelectItem value="price-high">Price (High to Low)</SelectItem>
+                  <SelectItem value="category">Category</SelectItem>
+                </SelectContent>
+              </Select>
+              <TabsList>
               <TabsTrigger value="grid" className="gap-2">
                 <Home className="h-4 w-4" />
                 Grid View
@@ -251,6 +284,7 @@ const Index = () => {
                 Charts
               </TabsTrigger>
             </TabsList>
+            </div>
           </div>
 
           <TabsContent value="grid">
@@ -266,7 +300,7 @@ const Index = () => {
               </div>
             ) : (
               <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {costData.map((item) => (
+                {getSortedData().map((item) => (
                   <CostItem
                     key={item.id}
                     item={item.item}
@@ -298,6 +332,13 @@ const Index = () => {
           </TabsContent>
         </Tabs>
       </section>
+
+      {/* Copyright Footer */}
+      <footer className="border-t bg-card/30 backdrop-blur-sm py-6">
+        <div className="container mx-auto px-4 text-center text-sm text-muted-foreground">
+          <p>© {new Date().getFullYear()} Bengaluru Cost of Living. All rights reserved.</p>
+        </div>
+      </footer>
     </div>
   );
 };
