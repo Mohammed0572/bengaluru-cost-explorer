@@ -14,7 +14,7 @@ export const DashboardLayout = () => {
 
   return (
     <div className="min-h-screen bg-background text-foreground flex">
-      <Sidebar />
+      <Sidebar className="hidden md:flex" />
       <div className="flex-1 flex flex-col min-w-0">
         <Topbar 
           searchTerm={searchTerm}
