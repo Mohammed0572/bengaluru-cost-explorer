@@ -1,18 +1,31 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { 
   BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer
 } from "recharts";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { generateMockData } from "@/lib/mock-data";
+import { fetchCostData, CostItem } from "@/lib/mock-data";
+import { Loader2 } from "lucide-react";
 
 const Compare = () => {
-  const data = generateMockData();
-  const neighborhoods = [...new Set(data.map(item => item.area))];
+  const [data, setData] = useState<CostItem[]>([]);
+  const [loading, setLoading] = useState(true);
   
-  const [area1, setArea1] = useState(neighborhoods[0] || "");
-  const [area2, setArea2] = useState(neighborhoods[1] || "");
+  const [area1, setArea1] = useState("");
+  const [area2, setArea2] = useState("");
+
+  useEffect(() => {
+    fetchCostData().then(fetched => {
+      setData(fetched);
+      const uniqueAreas = [...new Set(fetched.map(item => item.area))];
+      setArea1(uniqueAreas[0] || "");
+      setArea2(uniqueAreas[1] || "");
+      setLoading(false);
+    });
+  }, []);
+
+  const neighborhoods = [...new Set(data.map(item => item.area))];
 
   const getAverages = (areaName: string) => {
     const areaData = data.filter(item => item.area === areaName);
@@ -37,7 +50,7 @@ const Compare = () => {
       [area2]: avg2.Rent,
     },
     {
-      category: "Food (Monthly)",
+      category: "Food",
       [area1]: avg1.Food,
       [area2]: avg2.Food,
     },
@@ -47,6 +60,15 @@ const Compare = () => {
       [area2]: avg2.Transport,
     }
   ];
+
+  if (loading) {
+    return (
+      <div className="h-full min-h-[60vh] flex flex-col items-center justify-center space-y-4">
+        <Loader2 className="w-10 h-10 animate-spin text-primary" />
+        <p className="text-muted-foreground animate-pulse">Loading comparison data from CSV...</p>
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-6">
