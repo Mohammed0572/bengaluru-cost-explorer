@@ -33,7 +33,7 @@ const About = () => {
         
         {/* Header */}
         <div className="space-y-6">
-          <h1 className="text-4xl md:text-6xl font-bold bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent pb-2">
+          <h1 className="text-4xl md:text-6xl font-bold text-white tracking-tight pb-2">
             About the Project
           </h1>
           <p className="text-xl text-slate-400 max-w-2xl">
@@ -94,7 +94,7 @@ const About = () => {
             ].map((member) => (
               <Card key={member.name} className="bg-slate-900 border-slate-800 hover:border-slate-600 transition-all">
                 <CardContent className="pt-6 text-center space-y-2">
-                  <div className="w-16 h-16 mx-auto rounded-full bg-gradient-to-br from-slate-700 to-slate-800 flex items-center justify-center text-xl font-bold text-slate-400">
+                  <div className="w-16 h-16 mx-auto rounded-full bg-slate-800 flex items-center justify-center text-xl font-bold text-slate-400">
                     {member.name[0]}
                   </div>
                   <h3 className="font-bold text-lg text-slate-200">{member.name}</h3>
