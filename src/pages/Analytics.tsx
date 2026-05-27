@@ -1,11 +1,11 @@
+import { useState, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { motion } from "framer-motion";
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, BarChart, Bar } from 'recharts';
-import { generateMockData } from "@/lib/mock-data";
+import { fetchCostData, CostItem } from "@/lib/mock-data";
+import { Loader2 } from "lucide-react";
 
-const data = generateMockData();
-
-// Mock historical trend data for the chart
+// Mock historical trend data for the chart (Time series needs separate handling)
 const trendData = [
   { month: 'Jan', housing: 20000, food: 8000, transport: 3000 },
   { month: 'Feb', housing: 20500, food: 8200, transport: 3100 },
@@ -15,15 +15,40 @@ const trendData = [
   { month: 'Jun', housing: 22500, food: 9200, transport: 3600 },
 ];
 
-const categoryData = [
-  { name: 'Housing', avg: 22000 },
-  { name: 'Food', avg: 8500 },
-  { name: 'Transport', avg: 3500 },
-  { name: 'Utilities', avg: 2500 },
-  { name: 'Entertainment', avg: 4000 },
-];
-
 export default function Analytics() {
+  const [data, setData] = useState<CostItem[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetchCostData().then(fetched => {
+      setData(fetched);
+      setLoading(false);
+    });
+  }, []);
+
+  if (loading) {
+    return (
+      <div className="h-full min-h-[60vh] flex flex-col items-center justify-center space-y-4">
+        <Loader2 className="w-10 h-10 animate-spin text-primary" />
+        <p className="text-muted-foreground animate-pulse">Loading analytics data from CSV...</p>
+      </div>
+    );
+  }
+
+  // Calculate dynamic category averages based on the CSV data
+  const getCategoryAvg = (categoryName: string) => {
+    const items = data.filter(i => i.category === categoryName);
+    return items.length ? Math.round(items.reduce((sum, i) => sum + i.avg_price, 0) / items.length) : 0;
+  };
+
+  const categoryData = [
+    { name: 'Housing', avg: getCategoryAvg('Housing') || 22000 },
+    { name: 'Food', avg: getCategoryAvg('Food') || 8500 },
+    { name: 'Transport', avg: getCategoryAvg('Transportation') || 3500 },
+    { name: 'Utilities', avg: getCategoryAvg('Utilities') || 2500 },
+    { name: 'Entertainment', avg: getCategoryAvg('Entertainment') || 4000 },
+  ];
+
   return (
     <motion.div 
       className="space-y-8"

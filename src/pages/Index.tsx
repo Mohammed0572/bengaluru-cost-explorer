@@ -1,4 +1,4 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { useOutletContext } from "react-router-dom";
 import { motion } from "framer-motion";
 import { StatCard } from "@/components/dashboard/StatCard";
@@ -6,8 +6,8 @@ import { CostDistributionChart } from "@/components/dashboard/CostDistributionCh
 import { RecentContributions } from "@/components/dashboard/RecentContributions";
 import { ContributeForm } from "@/components/ContributeForm";
 import { NeighborhoodSelector } from "@/components/dashboard/NeighborhoodSelector";
-import { Calculator, IndianRupee, TrendingUp, Tags } from "lucide-react";
-import { generateMockData, CostItem } from "@/lib/mock-data";
+import { Calculator, IndianRupee, TrendingUp, Tags, Loader2 } from "lucide-react";
+import { fetchCostData, CostItem } from "@/lib/mock-data";
 import type { DashboardContextType } from "@/components/layout/DashboardLayout";
 
 // Animation Variants
@@ -25,14 +25,25 @@ const itemVariants = {
 };
 
 export default function Index() {
-  const [items, setItems] = useState<CostItem[]>(generateMockData());
+  const [items, setItems] = useState<CostItem[]>([]);
+  const [loading, setLoading] = useState(true);
   const [selectedArea, setSelectedArea] = useState("All Areas");
   const { searchTerm } = useOutletContext<DashboardContextType>();
 
+  const loadData = async () => {
+    setLoading(true);
+    const data = await fetchCostData();
+    setItems(data);
+    setLoading(false);
+  };
+
+  useEffect(() => {
+    loadData();
+  }, []);
+
   const handleDataAdded = () => {
-    // Mocking adding data by refreshing the mock data set and showing a toast
-    // In reality, this form will just pretend to work for the portfolio since Supabase is dropped
-    setItems([...generateMockData()]);
+    // Mocking adding data by refreshing the mock data set from CSV
+    loadData();
   };
 
   // Derived Data
@@ -58,6 +69,15 @@ export default function Index() {
 
   const totalValue = categoryStats.reduce((acc, curr) => acc + curr.value, 0);
   const highestCategory = categoryStats.length > 0 ? categoryStats[0] : null;
+
+  if (loading) {
+    return (
+      <div className="h-full min-h-[60vh] flex flex-col items-center justify-center space-y-4">
+        <Loader2 className="w-10 h-10 animate-spin text-primary" />
+        <p className="text-muted-foreground animate-pulse">Loading live data from CSV...</p>
+      </div>
+    );
+  }
 
   return (
     <motion.div 
