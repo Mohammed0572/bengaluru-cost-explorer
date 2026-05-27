@@ -3,7 +3,7 @@ const router = express.Router();
 const supabase = require('../utils/supabase');
 
 // Get all expenses (example of server-side data fetching)
-router.get('/', async (req, res) => {
+router.get('/', async (req, res, next) => {
   try {
     const { data, error } = await supabase
       .from('expenses')
@@ -13,12 +13,12 @@ router.get('/', async (req, res) => {
     if (error) throw error;
     res.json({ success: true, data });
   } catch (err) {
-    res.status(500).json({ success: false, error: err.message });
+    next(err);
   }
 });
 
 // Secure endpoint example: Calculate budgets and generate a report
-router.post('/calculate-budget', async (req, res) => {
+router.post('/calculate-budget', async (req, res, next) => {
   try {
     // In a real app, this would perform complex calculations or trigger an email
     // that you wouldn't want running purely on the client side.
@@ -31,7 +31,7 @@ router.post('/calculate-budget', async (req, res) => {
       report: { status: 'Generated' }
     });
   } catch (err) {
-    res.status(500).json({ success: false, error: err.message });
+    next(err);
   }
 });
 

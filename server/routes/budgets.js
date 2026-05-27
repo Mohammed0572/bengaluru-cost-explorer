@@ -3,7 +3,7 @@ const router = express.Router();
 const supabase = require('../utils/supabase');
 
 // Get budget status
-router.get('/:userId', async (req, res) => {
+router.get('/:userId', async (req, res, next) => {
   try {
     const { userId } = req.params;
     
@@ -16,7 +16,7 @@ router.get('/:userId', async (req, res) => {
     if (error) throw error;
     res.json({ success: true, data });
   } catch (err) {
-    res.status(500).json({ success: false, error: err.message });
+    next(err);
   }
 });
 
