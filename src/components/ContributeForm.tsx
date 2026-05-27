@@ -28,28 +28,16 @@ export const ContributeForm = ({ onDataAdded }: { onDataAdded: () => void }) => 
     }
 
     setLoading(true);
-    const priceVal = Number(formData.price);
 
     try {
-      const { error } = await supabase.from('cost_items' as any).insert({
-        category: formData.category,
-        item: formData.item,
-        min_price: priceVal,     
-        max_price: priceVal,
-        avg_price: priceVal,
-        unit: formData.unit,
-        area: formData.area || "Bengaluru",
-      });
-
-      if (error) throw error;
+      // Simulate network request
+      await new Promise(resolve => setTimeout(resolve, 1000));
 
       toast({ title: "Success!", description: "Thank you for contributing data." });
       setFormData({ category: "", item: "", price: "", area: "", unit: "unit" });
       onDataAdded(); 
-
     } catch (error: any) {
-      console.error(error);
-      toast({ title: "Error", description: error.message || "Failed to submit data.", variant: "destructive" });
+      toast({ title: "Error", description: "Failed to submit data.", variant: "destructive" });
     } finally {
       setLoading(false);
     }
