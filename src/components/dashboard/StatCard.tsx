@@ -13,11 +13,11 @@ interface StatCardProps {
 
 export const StatCard = ({ title, value, icon, trend, trendUp, className }: StatCardProps) => {
   return (
-    <Card className={cn("overflow-hidden group hover:border-primary/50 transition-colors duration-300", className)}>
+    <Card className={cn("overflow-hidden group hover:border-border hover:bg-muted/30 transition-all duration-300 ease-out hover:-translate-y-1 shadow-sm", className)}>
       <CardContent className="p-6">
         <div className="flex items-center justify-between mb-4">
           <span className="text-sm font-medium text-muted-foreground">{title}</span>
-          <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary group-hover:scale-110 transition-transform duration-300">
+          <div className="w-10 h-10 rounded-full bg-muted flex items-center justify-center text-muted-foreground group-hover:text-primary group-hover:bg-primary/10 transition-colors duration-300 ease-out">
             {icon}
           </div>
         </div>
