@@ -47,7 +47,7 @@ export default function Index() {
     filteredItems.forEach(item => {
       const cat = item.category; 
       if (!stats[cat]) stats[cat] = { total: 0, count: 0 };
-      stats[cat].total += Number(item.avg_price);
+      stats[cat].total += Number(item.avg_price || item.amount || 0);
       stats[cat].count += 1;
     });
     return Object.entries(stats).map(([name, data]) => ({

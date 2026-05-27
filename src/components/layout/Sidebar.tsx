@@ -1,19 +1,21 @@
 import { Link, useLocation } from "react-router-dom";
-import { Home, PieChart, Info, Mail, Settings, LogOut } from "lucide-react";
+import { Home, PieChart, Info, Mail, Settings, LogOut, Scale, Wallet } from "lucide-react";
 import { cn } from "@/lib/utils";
 
-export const Sidebar = () => {
+export const Sidebar = ({ className }: { className?: string }) => {
   const location = useLocation();
 
   const navItems = [
     { name: "Dashboard", path: "/", icon: Home },
     { name: "Analytics", path: "/analytics", icon: PieChart },
+    { name: "Compare", path: "/compare", icon: Scale },
+    { name: "Budget", path: "/budget", icon: Wallet },
     { name: "About Us", path: "/about", icon: Info },
     { name: "Contact", path: "/contact", icon: Mail },
   ];
 
   return (
-    <aside className="w-64 border-r bg-card hidden md:flex flex-col justify-between h-screen sticky top-0">
+    <aside className={cn("w-64 border-r bg-card flex flex-col justify-between h-screen sticky top-0", className)}>
       <div>
         <div className="h-16 flex items-center px-6 border-b border-sidebar-border/50">
           <h1 className="font-bold text-xl tracking-tight text-primary">Cost Explorer</h1>
