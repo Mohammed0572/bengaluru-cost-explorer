@@ -36,7 +36,7 @@ export const CostDistributionChart = ({ categoryStats, totalValue }: CostDistrib
       </CardHeader>
       <CardContent className="flex flex-col sm:flex-row items-center justify-center gap-8 py-4">
         <div 
-          className="w-48 h-48 rounded-full shrink-0 relative shadow-lg hover:scale-105 transition-transform duration-500"
+          className="w-48 h-48 rounded-full shrink-0 relative shadow-sm"
           style={{ background: `conic-gradient(${pieGradient})` }}
         >
           <div className="absolute inset-0 m-auto w-32 h-32 rounded-full flex flex-col items-center justify-center bg-card shadow-inner">

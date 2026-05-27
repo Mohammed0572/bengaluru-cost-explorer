@@ -1,15 +1,13 @@
-import { Sun, Moon, Search, Menu } from "lucide-react";
+import { Search, Menu } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 
 interface TopbarProps {
-  isDarkMode: boolean;
-  toggleTheme: () => void;
   searchTerm: string;
   setSearchTerm: (val: string) => void;
 }
 
-export const Topbar = ({ isDarkMode, toggleTheme, searchTerm, setSearchTerm }: TopbarProps) => {
+export const Topbar = ({ searchTerm, setSearchTerm }: TopbarProps) => {
   return (
     <header className="h-16 border-b bg-card/50 backdrop-blur-md sticky top-0 z-40 flex items-center justify-between px-4 md:px-6">
       <div className="flex items-center gap-4 flex-1">
@@ -26,17 +24,6 @@ export const Topbar = ({ isDarkMode, toggleTheme, searchTerm, setSearchTerm }: T
             onChange={(e) => setSearchTerm(e.target.value)}
           />
         </div>
-      </div>
-
-      <div className="flex items-center gap-2">
-        <Button 
-          variant="outline" 
-          size="icon" 
-          onClick={toggleTheme}
-          className="rounded-full border-muted bg-background hover:bg-muted"
-        >
-          {isDarkMode ? <Sun className="w-4 h-4 text-amber-500" /> : <Moon className="w-4 h-4 text-slate-700" />}
-        </Button>
       </div>
     </header>
   );
