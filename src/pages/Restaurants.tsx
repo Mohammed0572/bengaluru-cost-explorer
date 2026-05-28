@@ -19,6 +19,7 @@ export default function Restaurants() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [search, setSearch] = useState("");
+  const [committedSearch, setCommittedSearch] = useState("");
   const [page, setPage] = useState(1);
 
   const fetchRestaurants = async (area = "", pageNum = 1) => {
@@ -46,12 +47,12 @@ export default function Restaurants() {
   };
 
   useEffect(() => {
-    fetchRestaurants(search, page);
-  }, [page]);
+    fetchRestaurants(committedSearch, page);
+  }, [committedSearch, page]);
 
   const handleSearch = () => {
+    setCommittedSearch(search);
     setPage(1);
-    fetchRestaurants(search, 1);
   };
 
   return (
