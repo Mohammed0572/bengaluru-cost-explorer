@@ -1,5 +1,5 @@
 import { Link, useLocation } from "react-router-dom";
-import { Home, PieChart, Info, Mail, Settings, LogOut, Swords, SlidersHorizontal } from "lucide-react";
+import { Home, PieChart, Info, Mail, Settings, LogOut, Swords, SlidersHorizontal, Utensils, Building } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 export const Sidebar = ({ className }: { className?: string }) => {
@@ -9,6 +9,8 @@ export const Sidebar = ({ className }: { className?: string }) => {
     { name: "Dashboard", path: "/", icon: Home },
     { name: "Analytics", path: "/analytics", icon: PieChart },
     { name: "Area Battle", path: "/area-battle", icon: Swords },
+    { name: "Restaurants", path: "/restaurants", icon: Utensils },
+    { name: "Real Estate", path: "/real-estate", icon: Building },
     { name: "Lifestyle Calculator", path: "/lifestyle", icon: SlidersHorizontal },
     { name: "About Us", path: "/about", icon: Info },
     { name: "Contact", path: "/contact", icon: Mail },
