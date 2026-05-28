@@ -14,7 +14,7 @@ A data-driven analysis project examining the cost of living trends in Bengaluru,
 
 An interactive React dashboard for exploring cost-of-living signals across Bengaluru. The app combines crowdsourced-style cost data, neighborhood filters, charts, a lifestyle calculator, restaurant search, real-estate browsing, and a 3D category breakdown.
 
-![Screenshot](public/screenshot.jpg)
+![Screenshot](assets/costoflivingbenagluru.jpeg)
 
 ## Tech Stack
 
@@ -101,35 +101,17 @@ http://localhost:3001
 
 Vite proxies `/api/*` requests to the Express server.
 
-## Useful Scripts
-
-```bash
-npm run dev       # Start Vite and the Express API server
-npm run build     # Create a production build
-npm run lint      # Run ESLint
-npm run preview   # Preview the production build
-```
-
-## Data Notes
-
-The dashboard currently uses a mix of local fallback cost data, Supabase-backed contributed items, and local CSV datasets queried through DuckDB. For production use, add a clear `last_updated` field or data version in the UI so users can judge freshness.
-
-## Security Notes
-
-- `.env` is ignored and should remain local only.
-- Supabase anon keys are safe to use in the browser only when Row-Level Security policies are configured correctly.
-- Service role keys must never be exposed to frontend code.
-- Prefer one clear data-access pattern long term: either a Backend-for-Frontend API boundary or a Supabase-first architecture with documented RLS policies.
-
 ## Team Members
+
 **College**: K.S. School of Engineering and Management
 
 - **Pranav** (Lead Developer / Data Analyst)
-- **Syed** (Data Collection & Research)
-- **Supreeth** (Visualization & Reporting)
 - **Rohith R.** (Documentation & Analysis)
+- **Supreeth** (Visualization & Reporting)
+- **Syed** (Data Collection & Research)
 
 ## Contribution
+
 This was a collaborative academic project. If you wish to improve the data or add new parameters (e.g., Inflation rates), feel free to fork the repo and submit a Pull Request!
 
 © 2025 K.S. School of Engineering and Management Group Project
