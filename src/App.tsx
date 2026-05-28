@@ -13,6 +13,8 @@ import TermsAndConditions from "./pages/TermsAndConditions";
 import CookiePolicy from "./pages/CookiePolicy";
 import AreaBattle from "./pages/AreaBattle";
 import LifestyleCalculator from "./pages/LifestyleCalculator";
+import Restaurants from "./pages/Restaurants";
+import RealEstate from "./pages/RealEstate";
 
 const queryClient = new QueryClient();
 
@@ -28,6 +30,8 @@ const App = () => (
             <Route path="/analytics" element={<Analytics />} />
             <Route path="/area-battle" element={<AreaBattle />} />
             <Route path="/lifestyle" element={<LifestyleCalculator />} />
+            <Route path="/restaurants" element={<Restaurants />} />
+            <Route path="/real-estate" element={<RealEstate />} />
             <Route path="/about" element={<About />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/privacy" element={<PrivacyPolicy />} />
