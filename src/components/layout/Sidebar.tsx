@@ -1,5 +1,5 @@
 import { Link, useLocation } from "react-router-dom";
-import { Home, PieChart, Info, Mail, Settings, LogOut, Swords, SlidersHorizontal, Utensils, Building } from "lucide-react";
+import { Home, PieChart, Info, Mail, Swords, SlidersHorizontal, Utensils, Building } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 export const Sidebar = ({ className }: { className?: string }) => {
@@ -78,16 +78,6 @@ export const Sidebar = ({ className }: { className?: string }) => {
         </div>
       </div>
 
-      <div className="p-4 border-t">
-        <button className="flex items-center gap-3 px-3 py-2 w-full rounded-md text-sm font-medium text-muted-foreground hover:bg-muted hover:text-foreground transition-colors">
-          <Settings className="w-4 h-4" />
-          Settings
-        </button>
-        <button className="flex items-center gap-3 px-3 py-2 w-full rounded-md text-sm font-medium text-destructive hover:bg-destructive/10 transition-colors mt-1">
-          <LogOut className="w-4 h-4" />
-          Logout
-        </button>
-      </div>
     </aside>
   );
 };
