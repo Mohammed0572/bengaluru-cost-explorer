@@ -10,7 +10,8 @@ import { ThreeVisualizer } from "@/components/ThreeVisualizer";
 import { Calculator, IndianRupee, TrendingUp, Tags, Loader2, X, Move } from "lucide-react";
 import { fetchCostData, CostItem } from "@/lib/mock-data";
 import type { DashboardContextType } from "@/components/layout/DashboardLayout";
-import { Responsive, WidthProvider, Layout } from "react-grid-layout";
+import { Responsive, WidthProvider } from "react-grid-layout/legacy";
+import type { Layout } from "react-grid-layout";
 import "react-grid-layout/css/styles.css";
 import "react-resizable/css/styles.css";
 
@@ -52,12 +53,22 @@ export default function Index() {
     { i: "grid", x: 0, y: 22, w: 12, h: 12, minW: 6, minH: 10 },
   ];
 
-  const [layouts, setLayouts] = useState<{ lg: Layout[] }>(() => {
+  const [layouts, setLayouts] = useState<Record<string, Layout[]>>(() => {
     const saved = localStorage.getItem("dashboardLayout");
-    return saved ? JSON.parse(saved) : { lg: defaultLayout };
+    if (!saved) {
+      return { lg: defaultLayout };
+    }
+
+    try {
+      const parsed = JSON.parse(saved);
+      return Array.isArray(parsed?.lg) ? parsed : { lg: defaultLayout };
+    } catch {
+      localStorage.removeItem("dashboardLayout");
+      return { lg: defaultLayout };
+    }
   });
 
-  const onLayoutChange = (layout: Layout[], allLayouts: any) => {
+  const onLayoutChange = (_layout: Layout[], allLayouts: Record<string, Layout[]>) => {
     setLayouts(allLayouts);
     localStorage.setItem("dashboardLayout", JSON.stringify(allLayouts));
   };
@@ -73,8 +84,10 @@ export default function Index() {
 
   // Derived Data
   const filteredItems = items.filter(item => {
-    const matchesSearch = item.item.toLowerCase().includes(searchTerm.toLowerCase());
-    const matchesArea = selectedArea === "All Areas" || item.area === selectedArea;
+    const itemName = item.item || "";
+    const itemArea = item.area || "";
+    const matchesSearch = itemName.toLowerCase().includes(searchTerm.toLowerCase());
+    const matchesArea = selectedArea === "All Areas" || itemArea === selectedArea;
     return matchesSearch && matchesArea;
   });
 
