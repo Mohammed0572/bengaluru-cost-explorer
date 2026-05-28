@@ -1,5 +1,5 @@
 import { Link, useLocation } from "react-router-dom";
-import { Home, PieChart, Info, Mail, Settings, LogOut, Scale, Wallet } from "lucide-react";
+import { Home, PieChart, Info, Mail, Settings, LogOut, Swords, SlidersHorizontal } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 export const Sidebar = ({ className }: { className?: string }) => {
@@ -8,8 +8,8 @@ export const Sidebar = ({ className }: { className?: string }) => {
   const navItems = [
     { name: "Dashboard", path: "/", icon: Home },
     { name: "Analytics", path: "/analytics", icon: PieChart },
-    { name: "Compare", path: "/compare", icon: Scale },
-    { name: "Budget", path: "/budget", icon: Wallet },
+    { name: "Area Battle", path: "/area-battle", icon: Swords },
+    { name: "Lifestyle Calculator", path: "/lifestyle", icon: SlidersHorizontal },
     { name: "About Us", path: "/about", icon: Info },
     { name: "Contact", path: "/contact", icon: Mail },
   ];

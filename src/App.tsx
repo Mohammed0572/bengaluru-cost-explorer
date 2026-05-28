@@ -11,8 +11,8 @@ import Contact from "./pages/Contact";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import TermsAndConditions from "./pages/TermsAndConditions";
 import CookiePolicy from "./pages/CookiePolicy";
-import Compare from "./pages/Compare";
-import Budget from "./pages/Budget";
+import AreaBattle from "./pages/AreaBattle";
+import LifestyleCalculator from "./pages/LifestyleCalculator";
 
 const queryClient = new QueryClient();
 
@@ -26,8 +26,8 @@ const App = () => (
           <Route element={<DashboardLayout />}>
             <Route path="/" element={<Index />} />
             <Route path="/analytics" element={<Analytics />} />
-            <Route path="/compare" element={<Compare />} />
-            <Route path="/budget" element={<Budget />} />
+            <Route path="/area-battle" element={<AreaBattle />} />
+            <Route path="/lifestyle" element={<LifestyleCalculator />} />
             <Route path="/about" element={<About />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/privacy" element={<PrivacyPolicy />} />

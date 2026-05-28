@@ -6,9 +6,15 @@ import { CostDistributionChart } from "@/components/dashboard/CostDistributionCh
 import { RecentContributions } from "@/components/dashboard/RecentContributions";
 import { ContributeForm } from "@/components/ContributeForm";
 import { NeighborhoodSelector } from "@/components/dashboard/NeighborhoodSelector";
-import { Calculator, IndianRupee, TrendingUp, Tags, Loader2 } from "lucide-react";
+import { ThreeVisualizer } from "@/components/ThreeVisualizer";
+import { Calculator, IndianRupee, TrendingUp, Tags, Loader2, X, Move } from "lucide-react";
 import { fetchCostData, CostItem } from "@/lib/mock-data";
 import type { DashboardContextType } from "@/components/layout/DashboardLayout";
+import { Responsive, WidthProvider, Layout } from "react-grid-layout";
+import "react-grid-layout/css/styles.css";
+import "react-resizable/css/styles.css";
+
+const ResponsiveGridLayout = WidthProvider(Responsive);
 
 // Animation Variants
 const containerVariants = {
@@ -28,6 +34,7 @@ export default function Index() {
   const [items, setItems] = useState<CostItem[]>([]);
   const [loading, setLoading] = useState(true);
   const [selectedArea, setSelectedArea] = useState("All Areas");
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const { searchTerm } = useOutletContext<DashboardContextType>();
 
   const loadData = async () => {
@@ -35,6 +42,24 @@ export default function Index() {
     const data = await fetchCostData();
     setItems(data);
     setLoading(false);
+  };
+
+  // Draggable Layout State
+  const defaultLayout: Layout[] = [
+    { i: "chart", x: 0, y: 0, w: 7, h: 10, minW: 4, minH: 8 },
+    { i: "form", x: 7, y: 0, w: 5, h: 10, minW: 4, minH: 8 },
+    { i: "3d", x: 0, y: 10, w: 12, h: 12, minW: 6, minH: 10 },
+    { i: "grid", x: 0, y: 22, w: 12, h: 12, minW: 6, minH: 10 },
+  ];
+
+  const [layouts, setLayouts] = useState<{ lg: Layout[] }>(() => {
+    const saved = localStorage.getItem("dashboardLayout");
+    return saved ? JSON.parse(saved) : { lg: defaultLayout };
+  });
+
+  const onLayoutChange = (layout: Layout[], allLayouts: any) => {
+    setLayouts(allLayouts);
+    localStorage.setItem("dashboardLayout", JSON.stringify(allLayouts));
   };
 
   useEffect(() => {
@@ -140,31 +165,100 @@ export default function Index() {
         />
       </motion.div>
 
-      {/* Middle Row: Charts & Form */}
-      <motion.div variants={itemVariants} className="grid gap-6 lg:grid-cols-7">
-        <div className="lg:col-span-4 h-full">
-          {filteredItems.length > 0 ? (
-            <CostDistributionChart categoryStats={categoryStats} totalValue={totalValue} />
-          ) : (
-            <div className="h-full min-h-[300px] bg-card border rounded-lg shadow-sm p-6 flex flex-col items-center justify-center text-center">
-              <IndianRupee className="w-12 h-12 text-muted-foreground/30 mb-4" />
-              <h3 className="text-xl font-semibold mb-2">No Data for this Area</h3>
-              <p className="text-muted-foreground">Try selecting a different neighborhood or contribute data below.</p>
-            </div>
-          )}
-        </div>
-        <div className="lg:col-span-3">
-          <div className="bg-card border rounded-lg p-6 h-full shadow-sm">
-            <h3 className="text-lg font-semibold mb-4">Contribute Data</h3>
-            <p className="text-sm text-muted-foreground mb-6">Help the community by adding recent costs you've incurred in Bengaluru.</p>
-            <ContributeForm onDataAdded={handleDataAdded} />
-          </div>
-        </div>
-      </motion.div>
+      {/* Active Filter Badge */}
+      {selectedCategory && (
+        <motion.div 
+          variants={itemVariants}
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          className="flex items-center gap-2"
+        >
+          <span className="text-sm text-muted-foreground">Filtered by:</span>
+          <button
+            onClick={() => setSelectedCategory(null)}
+            className="inline-flex items-center gap-1.5 bg-primary/15 text-primary border border-primary/30 px-3 py-1 rounded-full text-sm font-medium hover:bg-primary/25 transition-colors"
+          >
+            {selectedCategory}
+            <X className="w-3.5 h-3.5" />
+          </button>
+        </motion.div>
+      )}
 
-      {/* Bottom Row: Data Grid */}
-      <motion.div variants={itemVariants} className="grid gap-6 md:grid-cols-1">
-        <RecentContributions items={filteredItems} />
+      {/* Draggable Dashboard Grid */}
+      <motion.div variants={itemVariants} className="w-full">
+        <ResponsiveGridLayout
+          className="layout"
+          layouts={layouts}
+          breakpoints={{ lg: 1200, md: 996, sm: 768, xs: 480, xxs: 0 }}
+          cols={{ lg: 12, md: 10, sm: 6, xs: 4, xxs: 2 }}
+          rowHeight={30}
+          onLayoutChange={onLayoutChange}
+          draggableHandle=".drag-handle"
+          isResizable={true}
+          margin={[24, 24]}
+        >
+          {/* Chart Widget */}
+          <div key="chart" className="bg-card border rounded-2xl shadow-sm flex flex-col h-full overflow-hidden">
+            <div className="drag-handle p-2 border-b bg-muted/20 flex items-center justify-center cursor-grab active:cursor-grabbing hover:bg-muted/50 transition-colors">
+              <Move className="w-4 h-4 text-muted-foreground" />
+            </div>
+            <div className="p-4 flex-1 overflow-auto">
+              {filteredItems.length > 0 ? (
+                <CostDistributionChart categoryStats={categoryStats} totalValue={totalValue} />
+              ) : (
+                <div className="h-full flex flex-col items-center justify-center text-center">
+                  <IndianRupee className="w-12 h-12 text-muted-foreground/30 mb-4" />
+                  <p className="text-muted-foreground">No Data for this Area</p>
+                </div>
+              )}
+            </div>
+          </div>
+
+          {/* Form Widget */}
+          <div key="form" className="bg-card border rounded-2xl shadow-sm flex flex-col h-full overflow-hidden">
+            <div className="drag-handle p-2 border-b bg-muted/20 flex items-center justify-center cursor-grab active:cursor-grabbing hover:bg-muted/50 transition-colors">
+              <Move className="w-4 h-4 text-muted-foreground" />
+            </div>
+            <div className="p-6 flex-1 overflow-auto">
+              <h3 className="text-lg font-semibold mb-2">Contribute Data</h3>
+              <p className="text-xs text-muted-foreground mb-4">Add recent costs you've incurred.</p>
+              <ContributeForm onDataAdded={handleDataAdded} />
+            </div>
+          </div>
+
+          {/* 3D Visualizer Widget */}
+          <div key="3d" className="bg-card border rounded-2xl shadow-sm flex flex-col h-full overflow-hidden">
+            <div className="drag-handle p-2 border-b bg-muted/20 flex items-center justify-center cursor-grab active:cursor-grabbing hover:bg-muted/50 transition-colors">
+              <Move className="w-4 h-4 text-muted-foreground" />
+            </div>
+            <div className="p-6 flex-1 flex flex-col">
+              <h3 className="text-xl font-semibold mb-1">Interactive 3D Breakdown</h3>
+              <p className="text-xs text-muted-foreground mb-4">Click a bar to filter the table below. Drag to rotate.</p>
+              <div className="flex-1 w-full relative">
+                {filteredItems.length > 0 && (
+                  <ThreeVisualizer 
+                    data={categoryStats.map(stat => ({ name: stat.name, avg: stat.value }))} 
+                    onCategorySelect={setSelectedCategory}
+                  />
+                )}
+              </div>
+            </div>
+          </div>
+
+          {/* Data Grid Widget */}
+          <div key="grid" className="bg-card border rounded-2xl shadow-sm flex flex-col h-full overflow-hidden">
+            <div className="drag-handle p-2 border-b bg-muted/20 flex items-center justify-center cursor-grab active:cursor-grabbing hover:bg-muted/50 transition-colors">
+              <Move className="w-4 h-4 text-muted-foreground" />
+            </div>
+            <div className="p-0 flex-1 overflow-auto">
+              <RecentContributions items={
+                selectedCategory 
+                  ? filteredItems.filter(item => item.category === selectedCategory)
+                  : filteredItems
+              } />
+            </div>
+          </div>
+        </ResponsiveGridLayout>
       </motion.div>
     </motion.div>
   );
