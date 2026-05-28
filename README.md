@@ -1,6 +1,20 @@
 # Bengaluru Cost Explorer
 
+![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=flat&logo=typescript&logoColor=white)
+![Vite](https://img.shields.io/badge/Vite-646CFF?style=flat&logo=vite&logoColor=white)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=flat&logo=tailwind-css&logoColor=white)
+![React Router](https://img.shields.io/badge/React_Router-CA4245?style=flat&logo=react-router&logoColor=white)
+![Recharts](https://img.shields.io/badge/Recharts-22B5BF?style=flat)
+![Three.js](https://img.shields.io/badge/Three.js-000000?style=flat&logo=three.js&logoColor=white)
+![Express](https://img.shields.io/badge/Express-000000?style=flat&logo=express&logoColor=white)
+![DuckDB](https://img.shields.io/badge/DuckDB-FFF000?style=flat&logo=duckdb&logoColor=black)
+![Supabase](https://img.shields.io/badge/Supabase-3ECF8E?style=flat&logo=supabase&logoColor=white)
+
+A data-driven analysis project examining the cost of living trends in Bengaluru, Karnataka. This project utilizes Python data science libraries to visualize expenses, calculate correlations between lifestyle factors, and provide actionable insights for residents and students.
+
 An interactive React dashboard for exploring cost-of-living signals across Bengaluru. The app combines crowdsourced-style cost data, neighborhood filters, charts, a lifestyle calculator, restaurant search, real-estate browsing, and a 3D category breakdown.
+
+![Screenshot](public/screenshot.jpg)
 
 ## Tech Stack
 
@@ -106,3 +120,16 @@ The dashboard currently uses a mix of local fallback cost data, Supabase-backed 
 - Supabase anon keys are safe to use in the browser only when Row-Level Security policies are configured correctly.
 - Service role keys must never be exposed to frontend code.
 - Prefer one clear data-access pattern long term: either a Backend-for-Frontend API boundary or a Supabase-first architecture with documented RLS policies.
+
+## Team Members
+**College**: K.S. School of Engineering and Management
+
+- **Pranav** (Lead Developer / Data Analyst)
+- **Syed** (Data Collection & Research)
+- **Supreeth** (Visualization & Reporting)
+- **Rohith R.** (Documentation & Analysis)
+
+## Contribution
+This was a collaborative academic project. If you wish to improve the data or add new parameters (e.g., Inflation rates), feel free to fork the repo and submit a Pull Request!
+
+© 2025 K.S. School of Engineering and Management Group Project
