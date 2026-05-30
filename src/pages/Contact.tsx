@@ -1,26 +1,28 @@
 import { Home, Info } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
 import { Card } from "@/components/ui/card";
 
 const Contact = () => {
   return (
     <div className="min-h-screen bg-background">
       {/* Navigation */}
-      <nav className="border-b bg-gradient-to-r from-card/50 to-card/30 backdrop-blur-md sticky top-0 z-50 shadow-sm">
+      <nav className="border-b bg-card/50 backdrop-blur-md sticky top-0 z-50 shadow-sm">
         <div className="container mx-auto px-4 py-4 flex items-center justify-between">
           <h2 className="text-xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
               Cost of Living Bengaluru
           </h2>
           <div className="flex items-center gap-2">
             <Link to="/">
-              <Button variant="ghost" className="gap-2 hover:bg-primary/10 transition-all">
+              <Button variant="ghost" className="gap-2 hover:bg-muted/50 transition-all">
                 <Home className="h-4 w-4" />
                 <span className="hidden sm:inline">Home</span>
               </Button>
             </Link>
             <Link to="/about">
-              <Button variant="ghost" className="gap-2 hover:bg-primary/10 transition-all">
+              <Button variant="ghost" className="gap-2 hover:bg-muted/50 transition-all">
                 <Info className="h-4 w-4" />
                 <span className="hidden sm:inline">About</span>
               </Button>
@@ -58,7 +60,7 @@ const Contact = () => {
               </p>
             </Card>
           </div>
-        </div>
+        </motion.div>
       </div>
     </div>
   );
