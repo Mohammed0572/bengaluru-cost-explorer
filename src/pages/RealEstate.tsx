@@ -18,7 +18,7 @@ export default function RealEstate() {
     setLoading(true);
     setError("");
     try {
-      const data = await fetchProperties(area, 50, pageNum);
+      const data = await fetchProperties(area, 9, pageNum);
       setProperties(data);
     } catch (err) {
       console.error(err);
@@ -121,7 +121,7 @@ export default function RealEstate() {
           <Button 
             variant="outline" 
             onClick={() => setPage(p => p + 1)}
-            disabled={properties.length < 50}
+            disabled={properties.length < 9}
           >
             Next
           </Button>
