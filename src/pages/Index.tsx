@@ -4,8 +4,9 @@ import { motion } from "framer-motion";
 import { StatCard } from "@/components/dashboard/StatCard";
 import { CostDistributionChart } from "@/components/dashboard/CostDistributionChart";
 import { RecentContributions } from "@/components/dashboard/RecentContributions";
+import { NeighborhoodSelector } from "@/components/dashboard/NeighborhoodSelector";
 import { ContributeForm } from "@/components/ContributeForm";
-import { Calculator, IndianRupee, TrendingUp, Tags } from "lucide-react";
+import { ThreeVisualizer } from "@/components/ThreeVisualizer";
 import { Calculator, IndianRupee, TrendingUp, Tags, Loader2, X, Move } from "lucide-react";
 import { fetchCostData, CostItem } from "@/lib/mock-data";
 import type { DashboardContextType } from "@/components/layout/DashboardLayout";
@@ -256,8 +257,6 @@ export default function Index() {
             </div>
           </div>
 
-      </div>
-    </DashboardLayout>
           {/* Data Grid Widget */}
           <div key="grid" className="bg-card border rounded-2xl shadow-sm flex flex-col h-full overflow-hidden">
             <div className="drag-handle p-2 border-b bg-muted/20 flex items-center justify-center cursor-grab active:cursor-grabbing hover:bg-muted/50 transition-colors">

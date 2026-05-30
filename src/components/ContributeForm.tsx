@@ -18,7 +18,17 @@ import {
 import { Label } from "@/components/ui/label";
 import { PlusCircle, Loader2 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
-import { supabase } from "@/integrations/supabase/client";
+import { isSupabaseConfigured, supabase } from "@/integrations/supabase/client";
+
+type CostItemInsert = {
+  category: string;
+  item: string;
+  min_price: number;
+  max_price: number;
+  avg_price: number;
+  unit: string;
+  area: string;
+};
 
 export const ContributeForm = ({
   onDataAdded,
@@ -47,10 +57,20 @@ export const ContributeForm = ({
       return;
     }
 
+    if (!isSupabaseConfigured) {
+      toast({
+        title: "Supabase is not configured",
+        description: "Add VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY to enable submissions.",
+        variant: "destructive",
+      });
+      return;
+    }
+
     setLoading(true);
+    const priceVal = Number(formData.price);
 
     try {
-      const { error } = await supabase.from("cost_items" as any).insert({
+      const { error } = await supabase.from("cost_items").insert({
         category: formData.category,
         item: formData.item,
         min_price: priceVal,
@@ -58,7 +78,7 @@ export const ContributeForm = ({
         avg_price: priceVal,
         unit: formData.unit,
         area: formData.area || "Bengaluru",
-      });
+      } as CostItemInsert);
 
       if (error) throw error;
 
@@ -74,11 +94,12 @@ export const ContributeForm = ({
         unit: "unit",
       });
       onDataAdded();
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error(error);
+      const message = error instanceof Error ? error.message : "Failed to submit data.";
       toast({
         title: "Error",
-        description: error.message || "Failed to submit data.",
+        description: message,
         variant: "destructive",
       });
     } finally {
