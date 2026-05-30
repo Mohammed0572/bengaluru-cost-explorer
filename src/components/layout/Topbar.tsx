@@ -1,11 +1,10 @@
-import { Search, Menu } from "lucide-react";
+import { Search, Menu, Moon, Sun } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import { Sidebar } from "./Sidebar";
-
 interface TopbarProps {
+  isDarkMode: boolean;
+  toggleTheme: () => void;
   searchTerm: string;
   setSearchTerm: (val: string) => void;
 }
