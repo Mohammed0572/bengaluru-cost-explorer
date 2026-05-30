@@ -25,11 +25,12 @@ const About = () => {
         </Link>
       </nav>
 
-      {/* Content */}
-      <div className="container mx-auto px-4 py-16">
-        <div className="max-w-4xl mx-auto">
-          <h1 className="text-5xl font-bold mb-6 bg-gradient-to-r from-primary via-secondary to-accent bg-clip-text text-transparent">
-            About Us
+      {/* Main Content */}
+      <div className="max-w-4xl mx-auto space-y-12 pt-10">
+        {/* Header */}
+        <div className="space-y-6">
+          <h1 className="text-4xl md:text-6xl font-bold bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent pb-2">
+            About the Project
           </h1>
 
           <div className="prose prose-lg max-w-none">
