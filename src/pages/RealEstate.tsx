@@ -16,6 +16,7 @@ export default function RealEstate() {
   const [properties, setProperties] = useState<Property[]>([]);
   const [loading, setLoading] = useState(false);
   const [search, setSearch] = useState("");
+  const [submittedSearch, setSubmittedSearch] = useState("");
   const [page, setPage] = useState(1);
 
   const fetchProperties = useCallback(async (area = "", pageNum = 1) => {
@@ -32,12 +33,12 @@ export default function RealEstate() {
   }, []);
 
   useEffect(() => {
-    fetchProperties(search, page);
-  }, [fetchProperties, page, search]);
+    fetchProperties(submittedSearch, page);
+  }, [fetchProperties, page, submittedSearch]);
 
   const handleSearch = () => {
+    setSubmittedSearch(search);
     setPage(1);
-    fetchProperties(search, 1);
   };
 
   return (
