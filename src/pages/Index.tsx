@@ -5,7 +5,34 @@ import { StatCard } from "@/components/dashboard/StatCard";
 import { CostDistributionChart } from "@/components/dashboard/CostDistributionChart";
 import { RecentContributions } from "@/components/dashboard/RecentContributions";
 import { ContributeForm } from "@/components/ContributeForm";
+<<<<<<< Updated upstream
 import { Calculator, IndianRupee, TrendingUp, Tags } from "lucide-react";
+=======
+import { NeighborhoodSelector } from "@/components/dashboard/NeighborhoodSelector";
+import { Calculator, IndianRupee, TrendingUp, Tags, Loader2, X, Move } from "lucide-react";
+import { fetchCostData, CostItem } from "@/lib/mock-data";
+import type { DashboardContextType } from "@/components/layout/DashboardLayout";
+import { Responsive, WidthProvider } from "react-grid-layout/legacy";
+import type { Layout } from "react-grid-layout";
+import "react-grid-layout/css/styles.css";
+import "react-resizable/css/styles.css";
+
+const ResponsiveGridLayout = WidthProvider(Responsive);
+
+// Animation Variants
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: { staggerChildren: 0.1 }
+  }
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.4, ease: "easeOut" } }
+};
+>>>>>>> Stashed changes
 
 export default function Index() {
   const [items, setItems] = useState<any[]>([]);
@@ -115,7 +142,115 @@ export default function Index() {
           <RecentContributions items={filteredItems} />
         </div>
 
+<<<<<<< Updated upstream
       </div>
     </DashboardLayout>
+=======
+      {/* Top Row: Stat Cards */}
+      <motion.div variants={itemVariants} className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+        <StatCard 
+          title="Estimated Total Costs" 
+          value={`₹${totalValue.toLocaleString()}`} 
+          icon={<Calculator className="w-5 h-5" />} 
+        />
+        <StatCard 
+          title="Highest Expense" 
+          value={highestCategory ? highestCategory.name : 'N/A'} 
+          icon={<TrendingUp className="w-5 h-5" />} 
+          trend={highestCategory ? `₹${highestCategory.value}` : undefined}
+          trendUp={false}
+        />
+        <StatCard 
+          title="Filtered Data Points" 
+          value={filteredItems.length} 
+          icon={<Tags className="w-5 h-5" />} 
+        />
+        <StatCard 
+          title="Avg Housing Cost" 
+          value={`₹${categoryStats.find(c => c.name === 'Housing')?.value?.toLocaleString() || 0}`} 
+          icon={<IndianRupee className="w-5 h-5" />} 
+        />
+      </motion.div>
+
+      {/* Active Filter Badge */}
+      {selectedCategory && (
+        <motion.div 
+          variants={itemVariants}
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          className="flex items-center gap-2"
+        >
+          <span className="text-sm text-muted-foreground">Filtered by:</span>
+          <button
+            onClick={() => setSelectedCategory(null)}
+            className="inline-flex items-center gap-1.5 bg-primary/15 text-primary border border-primary/30 px-3 py-1 rounded-full text-sm font-medium hover:bg-primary/25 transition-colors"
+          >
+            {selectedCategory}
+            <X className="w-3.5 h-3.5" />
+          </button>
+        </motion.div>
+      )}
+
+      {/* Draggable Dashboard Grid */}
+      <motion.div variants={itemVariants} className="w-full">
+        <ResponsiveGridLayout
+          className="layout"
+          layouts={layouts}
+          breakpoints={{ lg: 1200, md: 996, sm: 768, xs: 480, xxs: 0 }}
+          cols={{ lg: 12, md: 10, sm: 6, xs: 4, xxs: 2 }}
+          rowHeight={30}
+          onLayoutChange={onLayoutChange}
+          draggableHandle=".drag-handle"
+          isResizable={true}
+          margin={[24, 24]}
+        >
+          {/* Chart Widget */}
+          <div key="chart" className="bg-card border rounded-2xl shadow-sm flex flex-col h-full overflow-hidden">
+            <div className="drag-handle p-2 border-b bg-muted/20 flex items-center justify-center cursor-grab active:cursor-grabbing hover:bg-muted/50 transition-colors">
+              <Move className="w-4 h-4 text-muted-foreground" />
+            </div>
+            <div className="p-4 flex-1 overflow-auto">
+              {filteredItems.length > 0 ? (
+                <CostDistributionChart categoryStats={categoryStats} totalValue={totalValue} />
+              ) : (
+                <div className="h-full flex flex-col items-center justify-center text-center">
+                  <IndianRupee className="w-12 h-12 text-muted-foreground/30 mb-4" />
+                  <p className="text-muted-foreground">No Data for this Area</p>
+                </div>
+              )}
+            </div>
+          </div>
+
+          {/* Form Widget */}
+          <div key="form" className="bg-card border rounded-2xl shadow-sm flex flex-col h-full overflow-hidden">
+            <div className="drag-handle p-2 border-b bg-muted/20 flex items-center justify-center cursor-grab active:cursor-grabbing hover:bg-muted/50 transition-colors">
+              <Move className="w-4 h-4 text-muted-foreground" />
+            </div>
+            <div className="p-6 flex-1 overflow-auto">
+              <h3 className="text-lg font-semibold mb-2">Contribute Data</h3>
+              <p className="text-xs text-muted-foreground mb-4">Add recent costs you've incurred.</p>
+              <ContributeForm onDataAdded={handleDataAdded} />
+            </div>
+          </div>
+
+
+
+          {/* Data Grid Widget */}
+          <div key="grid" className="bg-card border rounded-2xl shadow-sm flex flex-col h-full overflow-hidden">
+            <div className="drag-handle p-2 border-b bg-muted/20 flex items-center justify-center cursor-grab active:cursor-grabbing hover:bg-muted/50 transition-colors">
+              <Move className="w-4 h-4 text-muted-foreground" />
+            </div>
+            <div className="p-0 flex-1 overflow-auto">
+              <RecentContributions items={
+                selectedCategory 
+                  ? filteredItems.filter(item => item.category === selectedCategory)
+                  : filteredItems
+              } />
+            </div>
+          </div>
+        </ResponsiveGridLayout>
+      </motion.div>
+    </motion.div>
+>>>>>>> Stashed changes
   );
 }
