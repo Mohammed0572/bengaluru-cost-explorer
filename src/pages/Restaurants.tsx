@@ -18,7 +18,7 @@ export default function Restaurants() {
     setLoading(true);
     setError("");
     try {
-      const data = await fetchRestaurants(area, 50, pageNum);
+      const data = await fetchRestaurants(area, 9, pageNum);
       setRestaurants(data);
     } catch (err) {
       console.error(err);
@@ -114,7 +114,7 @@ export default function Restaurants() {
           <Button 
             variant="outline" 
             onClick={() => setPage(p => p + 1)}
-            disabled={restaurants.length < 50}
+            disabled={restaurants.length < 9}
           >
             Next
           </Button>
