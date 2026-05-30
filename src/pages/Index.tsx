@@ -1,14 +1,11 @@
-import { useState, useEffect, useMemo } from "react";
-import { supabase } from "@/integrations/supabase/client";
-import { DashboardLayout } from "@/components/layout/DashboardLayout";
+import { useState, useMemo, useEffect } from "react";
+import { useOutletContext } from "react-router-dom";
+import { motion } from "framer-motion";
 import { StatCard } from "@/components/dashboard/StatCard";
 import { CostDistributionChart } from "@/components/dashboard/CostDistributionChart";
 import { RecentContributions } from "@/components/dashboard/RecentContributions";
 import { ContributeForm } from "@/components/ContributeForm";
-<<<<<<< Updated upstream
 import { Calculator, IndianRupee, TrendingUp, Tags } from "lucide-react";
-=======
-import { NeighborhoodSelector } from "@/components/dashboard/NeighborhoodSelector";
 import { Calculator, IndianRupee, TrendingUp, Tags, Loader2, X, Move } from "lucide-react";
 import { fetchCostData, CostItem } from "@/lib/mock-data";
 import type { DashboardContextType } from "@/components/layout/DashboardLayout";
@@ -32,120 +29,127 @@ const itemVariants = {
   hidden: { opacity: 0, y: 20 },
   visible: { opacity: 1, y: 0, transition: { duration: 0.4, ease: "easeOut" } }
 };
->>>>>>> Stashed changes
-
 export default function Index() {
-  const [items, setItems] = useState<any[]>([]);
-  const [searchTerm, setSearchTerm] = useState("");
-  const [isDarkMode, setIsDarkMode] = useState(true);
+  const [items, setItems] = useState<CostItem[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [selectedArea, setSelectedArea] = useState("All Areas");
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+  const { searchTerm } = useOutletContext<DashboardContextType>();
 
-  const fetchData = async () => {
-    const { data, error } = await supabase
-      .from('cost_items')
-      .select('*')
-      .order('created_at', { ascending: false });
-    
-    if (error) console.error('Error fetching data:', error);
-    else setItems(data || []);
+  const loadData = async () => {
+    setLoading(true);
+    const data = await fetchCostData();
+    setItems(data);
+    setLoading(false);
+  };
+
+  // Draggable Layout State
+  const defaultLayout: Layout[] = [
+    { i: "chart", x: 0, y: 0, w: 7, h: 10, minW: 4, minH: 8 },
+    { i: "form", x: 7, y: 0, w: 5, h: 10, minW: 4, minH: 8 },
+    { i: "3d", x: 0, y: 10, w: 12, h: 12, minW: 6, minH: 10 },
+    { i: "grid", x: 0, y: 22, w: 12, h: 12, minW: 6, minH: 10 },
+  ];
+
+  const [layouts, setLayouts] = useState<Record<string, Layout[]>>(() => {
+    const saved = localStorage.getItem("dashboardLayout");
+    if (!saved) {
+      return { lg: defaultLayout };
+    }
+
+    try {
+      const parsed = JSON.parse(saved);
+      return Array.isArray(parsed?.lg) ? parsed : { lg: defaultLayout };
+    } catch {
+      localStorage.removeItem("dashboardLayout");
+      return { lg: defaultLayout };
+    }
+  });
+
+  const onLayoutChange = (_layout: Layout[], allLayouts: Record<string, Layout[]>) => {
+    setLayouts(allLayouts);
+    localStorage.setItem("dashboardLayout", JSON.stringify(allLayouts));
   };
 
   useEffect(() => {
-    fetchData();
-    if (isDarkMode) {
-      document.documentElement.classList.add('dark');
-    } else {
-      document.documentElement.classList.remove('dark');
-    }
-  }, [isDarkMode]);
+    loadData();
+  }, []);
 
-  const toggleTheme = () => setIsDarkMode(!isDarkMode);
+  const handleDataAdded = () => {
+    // Mocking adding data by refreshing the mock data set from CSV
+    loadData();
+  };
 
   // Derived Data
-  const filteredItems = items.filter(item => 
-    item.item.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  const filteredItems = items.filter(item => {
+    const itemName = item.item || "";
+    const itemArea = item.area || "";
+    const matchesSearch = itemName.toLowerCase().includes(searchTerm.toLowerCase());
+    const matchesArea = selectedArea === "All Areas" || itemArea === selectedArea;
+    return matchesSearch && matchesArea;
+  });
 
   const categoryStats = useMemo(() => {
     const stats: Record<string, { total: number; count: number }> = {};
-    items.forEach(item => {
+    filteredItems.forEach(item => {
       const cat = item.category; 
       if (!stats[cat]) stats[cat] = { total: 0, count: 0 };
-      stats[cat].total += Number(item.avg_price);
+      stats[cat].total += Number(item.avg_price || item.amount || 0);
       stats[cat].count += 1;
     });
     return Object.entries(stats).map(([name, data]) => ({
       name,
       value: Math.round(data.total / data.count)
     })).sort((a, b) => b.value - a.value);
-  }, [items]);
+  }, [filteredItems]);
 
   const totalValue = categoryStats.reduce((acc, curr) => acc + curr.value, 0);
   const highestCategory = categoryStats.length > 0 ? categoryStats[0] : null;
 
+  if (loading) {
+    return (
+      <div className="h-full min-h-[60vh] flex flex-col items-center justify-center space-y-4">
+        <Loader2 className="w-10 h-10 animate-spin text-primary" />
+        <p className="text-muted-foreground animate-pulse">Loading live data from CSV...</p>
+      </div>
+    );
+  }
+
   return (
-    <DashboardLayout 
-      isDarkMode={isDarkMode} 
-      toggleTheme={toggleTheme}
-      searchTerm={searchTerm}
-      setSearchTerm={setSearchTerm}
+    <motion.div 
+      className="space-y-8"
+      variants={containerVariants}
+      initial="hidden"
+      animate="visible"
     >
-      <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
-        
-        {/* Header Section */}
-        <div>
-          <h2 className="text-3xl font-bold tracking-tight">Dashboard</h2>
-          <p className="text-muted-foreground mt-1">Explore the cost of living in Bengaluru, India.</p>
-        </div>
-
-        {/* Top Row: Stat Cards */}
-        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-          <StatCard 
-            title="Estimated Total Costs" 
-            value={`₹${totalValue.toLocaleString()}`} 
-            icon={<Calculator className="w-5 h-5" />} 
-          />
-          <StatCard 
-            title="Highest Expense" 
-            value={highestCategory ? highestCategory.name : 'N/A'} 
-            icon={<TrendingUp className="w-5 h-5" />} 
-            trend={highestCategory ? `₹${highestCategory.value}` : undefined}
-            trendUp={false}
-          />
-          <StatCard 
-            title="Total Data Points" 
-            value={items.length} 
-            icon={<Tags className="w-5 h-5" />} 
-          />
-          <StatCard 
-            title="Avg Housing Cost" 
-            value={`₹${categoryStats.find(c => c.name === 'Housing')?.value?.toLocaleString() || 0}`} 
-            icon={<IndianRupee className="w-5 h-5" />} 
-          />
-        </div>
-
-        {/* Middle Row: Charts & Form */}
-        <div className="grid gap-6 lg:grid-cols-7">
-          <div className="lg:col-span-4 h-full">
-            <CostDistributionChart categoryStats={categoryStats} totalValue={totalValue} />
-          </div>
-          <div className="lg:col-span-3">
-            <div className="bg-card border rounded-xl p-6 h-full shadow-sm hover:border-primary/50 transition-colors">
-              <h3 className="text-lg font-semibold mb-4">Contribute Data</h3>
-              <p className="text-sm text-muted-foreground mb-6">Help the community by adding recent costs you've incurred in Bengaluru.</p>
-              <ContributeForm onDataAdded={fetchData} />
+      {/* Hero Section */}
+      <motion.div variants={itemVariants} className="relative bg-card border rounded-2xl p-8 overflow-hidden shadow-sm">
+        <div className="absolute top-0 right-0 w-64 h-64 bg-primary/10 rounded-full blur-3xl -mr-20 -mt-20 pointer-events-none" />
+        <div className="relative z-10 max-w-2xl">
+          <h1 className="text-4xl md:text-5xl font-bold tracking-tight text-foreground mb-4">
+            Real-Time Cost of Living in <span className="text-primary">Bengaluru</span>
+          </h1>
+          <p className="text-lg text-muted-foreground mb-6">
+            A crowdsourced database built to help you understand exact prices across Namma Bengaluru. From rent in Indiranagar to a Masala Dosa in Jayanagar.
+          </p>
+          <div className="flex gap-4">
+            <div className="bg-background border rounded-lg px-4 py-2 flex flex-col">
+              <span className="text-xs text-muted-foreground uppercase tracking-wider font-semibold">Active Contributions</span>
+              <span className="text-xl font-bold">{items.length} Data Points</span>
+            </div>
+            <div className="bg-background border rounded-lg px-4 py-2 flex flex-col">
+              <span className="text-xs text-muted-foreground uppercase tracking-wider font-semibold">Avg 1BHK Rent</span>
+              <span className="text-xl font-bold text-primary">₹22,000/mo</span>
             </div>
           </div>
         </div>
+      </motion.div>
 
-        {/* Bottom Row: Data Grid */}
-        <div className="grid gap-6 md:grid-cols-1">
-          <RecentContributions items={filteredItems} />
-        </div>
+      {/* Neighborhood Selector */}
+      <motion.div variants={itemVariants}>
+        <NeighborhoodSelector selectedArea={selectedArea} onSelectArea={setSelectedArea} />
+      </motion.div>
 
-<<<<<<< Updated upstream
-      </div>
-    </DashboardLayout>
-=======
       {/* Top Row: Stat Cards */}
       <motion.div variants={itemVariants} className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
         <StatCard 
@@ -233,8 +237,27 @@ export default function Index() {
             </div>
           </div>
 
+          {/* 3D Visualizer Widget */}
+          <div key="3d" className="bg-card border rounded-2xl shadow-sm flex flex-col h-full overflow-hidden">
+            <div className="drag-handle p-2 border-b bg-muted/20 flex items-center justify-center cursor-grab active:cursor-grabbing hover:bg-muted/50 transition-colors">
+              <Move className="w-4 h-4 text-muted-foreground" />
+            </div>
+            <div className="p-6 flex-1 flex flex-col">
+              <h3 className="text-xl font-semibold mb-1">Interactive 3D Breakdown</h3>
+              <p className="text-xs text-muted-foreground mb-4">Click a bar to filter the table below. Drag to rotate.</p>
+              <div className="flex-1 w-full relative">
+                {filteredItems.length > 0 && (
+                  <ThreeVisualizer 
+                    data={categoryStats.map(stat => ({ name: stat.name, avg: stat.value }))} 
+                    onCategorySelect={setSelectedCategory}
+                  />
+                )}
+              </div>
+            </div>
+          </div>
 
-
+      </div>
+    </DashboardLayout>
           {/* Data Grid Widget */}
           <div key="grid" className="bg-card border rounded-2xl shadow-sm flex flex-col h-full overflow-hidden">
             <div className="drag-handle p-2 border-b bg-muted/20 flex items-center justify-center cursor-grab active:cursor-grabbing hover:bg-muted/50 transition-colors">
@@ -251,6 +274,6 @@ export default function Index() {
         </ResponsiveGridLayout>
       </motion.div>
     </motion.div>
->>>>>>> Stashed changes
+
   );
 }

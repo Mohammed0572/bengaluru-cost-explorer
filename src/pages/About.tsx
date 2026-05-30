@@ -29,7 +29,7 @@ const About = () => {
       <div className="max-w-4xl mx-auto space-y-12 pt-10">
         {/* Header */}
         <div className="space-y-6">
-          <h1 className="text-4xl md:text-6xl font-bold bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent pb-2">
+          <h1 className="text-4xl md:text-6xl font-bold text-white tracking-tight pb-2">
             About the Project
           </h1>
 

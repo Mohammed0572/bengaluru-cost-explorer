@@ -7,7 +7,14 @@ import { DashboardLayout } from "./components/layout/DashboardLayout";
 import Index from "./pages/Index";
 import Analytics from "./pages/Analytics";
 import About from "./pages/About";
-import Contact from "./pages/Contact"; // 1. IMPORT CONTACT
+import Contact from "./pages/Contact";
+import PrivacyPolicy from "./pages/PrivacyPolicy";
+import TermsAndConditions from "./pages/TermsAndConditions";
+import CookiePolicy from "./pages/CookiePolicy";
+import AreaBattle from "./pages/AreaBattle";
+import LifestyleCalculator from "./pages/LifestyleCalculator";
+import Restaurants from "./pages/Restaurants";
+import RealEstate from "./pages/RealEstate";
 
 const queryClient = new QueryClient();
 
@@ -18,9 +25,19 @@ const App = () => (
       <Sonner />
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Index />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/contact" element={<Contact />} /> {/* 2. ADD ROUTE */}
+          <Route element={<DashboardLayout />}>
+            <Route path="/" element={<Index />} />
+            <Route path="/analytics" element={<Analytics />} />
+            <Route path="/area-battle" element={<AreaBattle />} />
+            <Route path="/lifestyle" element={<LifestyleCalculator />} />
+            <Route path="/restaurants" element={<Restaurants />} />
+            <Route path="/real-estate" element={<RealEstate />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/contact" element={<Contact />} />
+            <Route path="/privacy" element={<PrivacyPolicy />} />
+            <Route path="/terms" element={<TermsAndConditions />} />
+            <Route path="/cookies" element={<CookiePolicy />} />
+          </Route>
         </Routes>
       </BrowserRouter>
     </TooltipProvider>
