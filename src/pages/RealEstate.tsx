@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { Loader2, Home, MapPin, IndianRupee, Layers } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -16,9 +16,10 @@ export default function RealEstate() {
   const [properties, setProperties] = useState<Property[]>([]);
   const [loading, setLoading] = useState(false);
   const [search, setSearch] = useState("");
+  const [submittedSearch, setSubmittedSearch] = useState("");
   const [page, setPage] = useState(1);
 
-  const fetchProperties = async (area = "", pageNum = 1) => {
+  const fetchProperties = useCallback(async (area = "", pageNum = 1) => {
     setLoading(true);
     try {
       const res = await fetch(`/api/real-estate?area=${encodeURIComponent(area)}&limit=50&page=${pageNum}`);
@@ -29,15 +30,15 @@ export default function RealEstate() {
     } finally {
       setLoading(false);
     }
-  };
+  }, []);
 
   useEffect(() => {
-    fetchProperties(search, page);
-  }, [page]);
+    fetchProperties(submittedSearch, page);
+  }, [fetchProperties, page, submittedSearch]);
 
   const handleSearch = () => {
+    setSubmittedSearch(search);
     setPage(1);
-    fetchProperties(search, 1);
   };
 
   return (

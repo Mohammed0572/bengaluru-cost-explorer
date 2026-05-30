@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect, useMemo, useCallback } from "react";
 import { motion } from "framer-motion";
 import { fetchCostData, CostItem } from "@/lib/mock-data";
 import { Loader2, Copy, MapPin, Home, Utensils, Car, Dumbbell, Film, Stethoscope, SlidersHorizontal, Check } from "lucide-react";
@@ -41,7 +41,7 @@ export default function LifestyleCalculator() {
   }, [data]);
 
   // Helper to find specific cost, falling back to city average if not found
-  const getCost = (category: string, itemSearch: string, specificArea: string = area) => {
+  const getCost = useCallback((category: string, itemSearch: string, specificArea: string = area) => {
     if (!specificArea) return 0;
     
     // Exact match in area
@@ -57,7 +57,7 @@ export default function LifestyleCalculator() {
     if (matches.length > 0) return matches.reduce((acc, curr) => acc + curr.avg_price, 0) / matches.length;
 
     return 0;
-  };
+  }, [area, data]);
 
   // Calculations
   const breakdown = useMemo(() => {
@@ -107,7 +107,7 @@ export default function LifestyleCalculator() {
       { name: "Lifestyle & Fitness", value: Math.round(totalFitness + totalEnt), icon: Dumbbell },
       { name: "Healthcare", value: Math.round(totalHealth), icon: Stethoscope },
     ].filter(item => item.value > 0);
-  }, [area, housing, eatingOut, transport, fitness, entertainment, healthcare, data]);
+  }, [area, housing, eatingOut, transport, fitness, entertainment, healthcare, getCost]);
 
   const totalCost = breakdown.reduce((acc, curr) => acc + curr.value, 0);
 
