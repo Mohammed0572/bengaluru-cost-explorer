@@ -16,7 +16,9 @@ export const Sidebar = () => {
     <aside className="w-64 border-r bg-card hidden md:flex flex-col justify-between h-screen sticky top-0">
       <div>
         <div className="h-16 flex items-center px-6 border-b">
-          <h1 className="font-bold text-xl tracking-tight text-primary">Cost Explorer</h1>
+          <h1 className="font-bold text-xl tracking-tight text-primary">
+            Cost Explorer
+          </h1>
         </div>
         <nav className="p-4 space-y-1">
           {navItems.map((item) => {
@@ -30,9 +32,8 @@ export const Sidebar = () => {
                   "flex items-center gap-3 px-3 py-2 rounded-md text-sm font-medium transition-colors",
                   isActive
                     ? "bg-primary text-primary-foreground"
-                    : "text-muted-foreground hover:bg-muted hover:text-foreground"
-                )}
-              >
+                    : "text-muted-foreground hover:bg-muted hover:text-foreground",
+                )}>
                 <Icon className="w-4 h-4" />
                 {item.name}
               </Link>
