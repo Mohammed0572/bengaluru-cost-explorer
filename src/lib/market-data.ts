@@ -1,3 +1,5 @@
+import { isSupabaseConfigured, supabase } from "@/integrations/supabase/client";
+
 export interface RestaurantListing {
   name: string;
   address: string;
@@ -43,4 +45,119 @@ export const filterByLocation = <T extends { location: string }>(items: T[], are
   const query = area.trim().toLowerCase();
   if (!query) return items;
   return items.filter((item) => item.location.toLowerCase().includes(query));
+};
+
+/**
+ * Fetch restaurants from Supabase, falling back to the Express /api endpoint,
+ * and then to hardcoded fallback data.
+ */
+export const fetchRestaurants = async (
+  area = "",
+  limit = 50,
+  page = 1,
+): Promise<RestaurantListing[]> => {
+  // 1. Try Supabase
+  if (isSupabaseConfigured) {
+    try {
+      let query = supabase
+        .from("restaurants")
+        .select("name, address, location, rating, votes, cost_for_two, cuisines, rest_type")
+        .order("rating", { ascending: false, nullsFirst: false })
+        .order("votes", { ascending: false })
+        .range((page - 1) * limit, page * limit - 1);
+
+      if (area) {
+        query = query.ilike("location", `%${area}%`);
+      }
+
+      const { data, error } = await query;
+
+      if (!error && data && data.length > 0) {
+        return data.map((r) => ({
+          name: r.name,
+          address: r.address ?? "",
+          location: r.location,
+          rating: r.rating,
+          votes: Number(r.votes),
+          cost_for_two: Number(r.cost_for_two),
+          cuisines: r.cuisines ?? "",
+          rest_type: r.rest_type ?? "",
+        }));
+      }
+    } catch {
+      // fall through to API
+    }
+  }
+
+  // 2. Try Express API
+  try {
+    const res = await fetch(
+      `/api/restaurants?area=${encodeURIComponent(area)}&limit=${limit}&page=${page}`,
+    );
+    const data = await res.json();
+    if (res.ok && Array.isArray(data) && data.length > 0) {
+      return data;
+    }
+  } catch {
+    // fall through to fallback
+  }
+
+  // 3. Hardcoded fallback
+  return filterByLocation(fallbackRestaurants, area);
+};
+
+/**
+ * Fetch real-estate listings from Supabase, falling back to the Express /api
+ * endpoint, and then to hardcoded fallback data.
+ */
+export const fetchProperties = async (
+  area = "",
+  limit = 50,
+  page = 1,
+): Promise<PropertyListing[]> => {
+  // 1. Try Supabase
+  if (isSupabaseConfigured) {
+    try {
+      let query = supabase
+        .from("real_estate")
+        .select("area, location, bhk, bath, property_type, price")
+        .order("price", { ascending: false })
+        .range((page - 1) * limit, page * limit - 1);
+
+      if (area) {
+        query = query.ilike("location", `%${area}%`);
+      }
+
+      const { data, error } = await query;
+
+      if (!error && data && data.length > 0) {
+        return data.map((p) => ({
+          area: Number(p.area),
+          location: p.location,
+          bhk: Number(p.bhk),
+          bath: Number(p.bath),
+          property_type: p.property_type,
+          price: Number(p.price),
+        }));
+      }
+    } catch {
+      // fall through to API
+    }
+  }
+
+  // 2. Try Express API
+  try {
+    const res = await fetch(
+      `/api/real-estate?area=${encodeURIComponent(area)}&limit=${limit}&page=${page}`,
+    );
+    const data = await res.json();
+    if (res.ok && Array.isArray(data) && data.length > 0) {
+      return data;
+    }
+  } catch {
+    // fall through to fallback
+  }
+
+  // 3. Hardcoded fallback
+  return filterByLocation(fallbackProperties, area);
 };

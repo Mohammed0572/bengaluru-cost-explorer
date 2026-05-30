@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Loader2, Utensils, Star, MapPin, IndianRupee } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { fallbackRestaurants, filterByLocation, type RestaurantListing } from "@/lib/market-data";
+import { fetchRestaurants, type RestaurantListing } from "@/lib/market-data";
 
 type Restaurant = RestaurantListing;
 
@@ -14,32 +14,22 @@ export default function Restaurants() {
   const [committedSearch, setCommittedSearch] = useState("");
   const [page, setPage] = useState(1);
 
-  const fetchRestaurants = async (area = "", pageNum = 1) => {
+  const loadRestaurants = async (area = "", pageNum = 1) => {
     setLoading(true);
     setError("");
     try {
-      const res = await fetch(`/api/restaurants?area=${encodeURIComponent(area)}&limit=50&page=${pageNum}`);
-      const data = await res.json();
-      if (!res.ok) {
-        throw new Error(data?.error || "Failed to load restaurants");
-      }
-
-      if (!Array.isArray(data)) {
-        throw new Error("Restaurant API returned an unexpected response");
-      }
-
+      const data = await fetchRestaurants(area, 50, pageNum);
       setRestaurants(data);
     } catch (err) {
       console.error(err);
-      setRestaurants(filterByLocation(fallbackRestaurants, area));
-      setError("");
+      setError("Failed to load restaurants");
     } finally {
       setLoading(false);
     }
   };
 
   useEffect(() => {
-    fetchRestaurants(committedSearch, page);
+    loadRestaurants(committedSearch, page);
   }, [committedSearch, page]);
 
   const handleSearch = () => {

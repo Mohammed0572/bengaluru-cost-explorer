@@ -1,3 +1,5 @@
+import { isSupabaseConfigured, supabase } from "@/integrations/supabase/client";
+
 export interface CostItem {
   id: string;
   category: string;
@@ -27,5 +29,34 @@ export const generateMockData = (): CostItem[] => {
 };
 
 export const fetchCostData = async (): Promise<CostItem[]> => {
-  return generateMockData();
+  if (!isSupabaseConfigured) {
+    return generateMockData();
+  }
+
+  try {
+    const { data, error } = await supabase
+      .from("cost_items")
+      .select("id, category, item, avg_price, unit, area, created_at")
+      .order("created_at", { ascending: false });
+
+    if (error) throw error;
+
+    if (data && data.length > 0) {
+      return data.map((row) => ({
+        id: row.id,
+        category: row.category,
+        item: row.item,
+        avg_price: Number(row.avg_price),
+        unit: row.unit,
+        area: row.area,
+        created_at: row.created_at,
+      }));
+    }
+
+    // Supabase returned no rows — use mock data
+    return generateMockData();
+  } catch (err) {
+    console.warn("Supabase fetch failed, using mock data:", err);
+    return generateMockData();
+  }
 };
