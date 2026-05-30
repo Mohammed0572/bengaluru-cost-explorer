@@ -1,35 +1,18 @@
 import { Link } from "react-router-dom";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { Github, Twitter, Instagram, Linkedin, Send } from "lucide-react";
+import { Github, Twitter, Instagram, Linkedin } from "lucide-react";
 
 export const Footer = () => {
   return (
     <footer className="w-full bg-card border-t mt-12 py-12 px-4 md:px-8">
       <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-12 gap-8 lg:gap-12">
         
-        {/* Branding & Newsletter Column */}
+        {/* Branding Column */}
         <div className="md:col-span-5 lg:col-span-4 space-y-6">
           <div>
             <h3 className="text-xl font-bold tracking-tight text-primary">Cost Explorer</h3>
             <p className="text-sm text-muted-foreground mt-2">
               Empowering Bengaluru residents with transparent, real-time cost of living data.
             </p>
-          </div>
-          
-          <div className="space-y-3">
-            <h4 className="text-sm font-semibold">Stay Updated</h4>
-            <div className="flex gap-2">
-              <Input 
-                placeholder="Enter your email" 
-                type="email" 
-                className="bg-background max-w-[240px]"
-              />
-              <Button size="icon" className="shrink-0 bg-primary hover:bg-primary/90">
-                <Send className="w-4 h-4 text-primary-foreground" />
-              </Button>
-            </div>
-            <p className="text-xs text-muted-foreground">Subscribe to our monthly newsletter.</p>
           </div>
         </div>
 
