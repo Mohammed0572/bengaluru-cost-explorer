@@ -43,6 +43,14 @@ interface CostChartsProps {
   data: CostData[];
 }
 
+interface CategoryAggregate {
+  category: string;
+  totalAvg: number;
+  count: number;
+  minPrice: number;
+  maxPrice: number;
+}
+
 const COLORS = [
   "#8b5cf6",
   "#ec4899",
@@ -75,19 +83,19 @@ export const CostCharts = ({ data }: CostChartsProps) => {
       item.maxPrice
     );
     return acc;
-  }, {} as Record<string, any>);
+  }, {} as Record<string, CategoryAggregate>);
 
-  const barChartData = Object.values(categoryData).map((cat: any) => ({
+  const barChartData = Object.values(categoryData).map((cat) => ({
     name: cat.category,
     avgCost: Math.round(cat.totalAvg / cat.count),
   }));
 
-  const pieChartData = Object.values(categoryData).map((cat: any) => ({
+  const pieChartData = Object.values(categoryData).map((cat) => ({
     name: cat.category,
     value: cat.count,
   }));
 
-  const radarChartData = Object.values(categoryData).map((cat: any) => ({
+  const radarChartData = Object.values(categoryData).map((cat) => ({
     category: cat.category,
     cost: Math.round(cat.totalAvg / cat.count),
     items: cat.count,
@@ -104,7 +112,7 @@ export const CostCharts = ({ data }: CostChartsProps) => {
     }));
 
   // Area chart for price ranges by category
-  const areaChartData = Object.values(categoryData).map((cat: any) => ({
+  const areaChartData = Object.values(categoryData).map((cat) => ({
     name: cat.category,
     min: cat.minPrice,
     max: cat.maxPrice,

@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { Outlet } from "react-router-dom";
 import { Sidebar } from "./Sidebar";
 import { Topbar } from "./Topbar";
@@ -9,12 +8,18 @@ export interface DashboardContextType {
   setSearchTerm: (val: string) => void;
 }
 
+interface DashboardLayoutProps {
+  isDarkMode?: boolean;
+  toggleTheme?: () => void;
+  searchTerm?: string;
+  setSearchTerm?: (val: string) => void;
+}
+
 export const DashboardLayout = ({
-  children,
-  isDarkMode,
-  toggleTheme,
-  searchTerm,
-  setSearchTerm,
+  isDarkMode = false,
+  toggleTheme = () => undefined,
+  searchTerm = "",
+  setSearchTerm = () => undefined,
 }: DashboardLayoutProps) => {
   return (
     <div className="min-h-screen bg-background text-foreground flex">
