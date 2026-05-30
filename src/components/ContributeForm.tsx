@@ -48,7 +48,6 @@ export const ContributeForm = ({
     }
 
     setLoading(true);
-    const priceVal = Number(formData.price);
 
     try {
       const { error } = await supabase.from("cost_items" as any).insert({

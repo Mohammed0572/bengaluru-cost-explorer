@@ -39,17 +39,17 @@ export const RecentContributions = ({ items }: RecentContributionsProps) => {
               >
                 <div className="flex flex-col gap-1 mb-2 sm:mb-0">
                   <div className="flex items-center gap-2">
-                    <h4 className="font-semibold text-base group-hover:text-primary transition-colors">{item.item}</h4>
+                    <h4 className="font-semibold text-base group-hover:text-primary transition-colors">{item.item || item.category}</h4>
                     <Badge variant="secondary" className="text-xs font-normal">{item.category}</Badge>
                   </div>
                   <span className="text-sm text-muted-foreground flex items-center gap-1">
-                    📍 {item.area || 'Bengaluru'}
+                    📍 {item.area || (item as any).neighborhood || 'Bengaluru'}
                   </span>
                 </div>
                 
                 <div className="flex items-baseline gap-1 text-right">
-                  <span className="text-lg font-bold text-foreground">₹{item.avg_price}</span>
-                  <span className="text-sm text-muted-foreground">/ {item.unit}</span>
+                  <span className="text-lg font-bold text-foreground">₹{item.avg_price || (item as any).amount}</span>
+                  <span className="text-sm text-muted-foreground">/ {item.unit || "month"}</span>
                 </div>
               </div>
             ))}

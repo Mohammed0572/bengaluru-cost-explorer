@@ -1,79 +1,117 @@
-# 🏙️ Cost of Living Analysis: Bengaluru
+# Bengaluru Cost Explorer
 
-A data-driven analysis project examining the cost of living trends in Bengaluru, Karnataka. This project utilizes Python data science libraries to visualize expenses, calculate correlations between lifestyle factors, and provide actionable insights for residents and students.
+![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=flat&logo=typescript&logoColor=white)
+![Vite](https://img.shields.io/badge/Vite-646CFF?style=flat&logo=vite&logoColor=white)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=flat&logo=tailwind-css&logoColor=white)
+![React Router](https://img.shields.io/badge/React_Router-CA4245?style=flat&logo=react-router&logoColor=white)
+![Recharts](https://img.shields.io/badge/Recharts-22B5BF?style=flat)
+![Three.js](https://img.shields.io/badge/Three.js-000000?style=flat&logo=three.js&logoColor=white)
+![Express](https://img.shields.io/badge/Express-000000?style=flat&logo=express&logoColor=white)
+![DuckDB](https://img.shields.io/badge/DuckDB-FFF000?style=flat&logo=duckdb&logoColor=black)
+![Supabase](https://img.shields.io/badge/Supabase-3ECF8E?style=flat&logo=supabase&logoColor=white)
 
-![Python](https://img.shields.io/badge/Python-3.10%2B-blue?style=flat&logo=python)
-![Pandas](https://img.shields.io/badge/Library-Pandas-150458?style=flat&logo=pandas)
-![Matplotlib](https://img.shields.io/badge/Library-Matplotlib-orange?style=flat&logo=python)
-![Status](https://img.shields.io/badge/Status-Complete-green)
+A data-driven analysis project examining the cost of living trends in Bengaluru, Karnataka. This project utilizes a React dashboard, Express API, and DuckDB to visualize expenses, calculate correlations between lifestyle factors, and provide actionable insights for residents and students.
 
-<p align="center">
-  <img src="assets/costoflivingbenagluru.jpeg" alt="Homepage" width="800">
-</p>
+An interactive web application for exploring cost-of-living signals across Bengaluru. The app combines crowdsourced-style cost data, neighborhood filters, charts, a lifestyle calculator, restaurant search, real-estate browsing, and a 3D category breakdown.
 
-## 📖 Overview
+![Screenshot](assets/New-costoflivingbenagluru.png)
 
-Bengaluru is known as the Silicon Valley of India, but it is also one of the most expensive cities to live in. This project analyzes a dataset of various expense categories—including rent, transport, food, and utilities—to determine the minimum and average budget required for students and working professionals.
+## Tech Stack
 
-**Key Objectives:**
-* Analyze the distribution of expenses across different neighborhoods.
-* Visualize the correlation between lifestyle choices and monthly budget.
-* Provide a clear breakdown of "Needs" vs. "Wants" for financial planning.
+- React 18 + TypeScript
+- Vite
+- Tailwind CSS + shadcn/ui components
+- React Router
+- Recharts and Three.js
+- Express API server
+- DuckDB for querying local CSV datasets
+- Supabase client integration for contributed cost items
 
-## 👥 Team Members
+## Features
 
-**College:** K.S. School of Engineering and Management
+- Dashboard with cost summaries, category charts, recent contributions, and draggable widgets
+- Interactive 3D category breakdown with click-to-filter behavior
+- Neighborhood filtering for cost data
+- Restaurant explorer backed by the local Zomato CSV dataset
+- Real-estate explorer backed by the local house prices CSV dataset
+- Lifestyle calculator for estimating monthly expenses
+- Analytics and area comparison pages
 
-* **Pranav** (Lead Developer / Data Analyst)
-* **Syed** (Data Collection & Research)
-* **Supreeth** (Visualization & Reporting)
-* **Rohith R.** (Documentation & Analysis)
+## Project Structure
 
-## 📊 Key Features & Analysis
+```text
+src/                  React app source
+src/components/       Shared UI and dashboard components
+src/pages/            Route-level pages
+src/integrations/     Supabase client and generated types
+server/               Express API and CSV query endpoints
+csv/                  Local datasets used by DuckDB
+public/               Static public assets
+supabase/             Supabase project files and migrations
+```
 
-* **Correlation Analysis:** Generated Heatmaps (Correlation Matrices) to identify how rent prices influence overall monthly expenditure.
-* **Expense Distribution:** Pie charts and Bar graphs visualizing the percentage of income spent on Transport (Metro/Bus) vs. Food/Rent.
-* **Budget Calculator:** A logic-based model to estimate monthly costs based on user inputs (e.g., "Student" vs. "Professional").
-* **Data Cleaning:** Pre-processing scripts using Pandas to handle missing values and outliers in the price data.
+## Environment Variables
 
-## 🛠️ Tech Stack
+Copy `.env.example` to `.env` and fill in local values:
 
-* **Language:** Python 3.x
-* **Data Manipulation:** Pandas, NumPy
-* **Visualization:** Matplotlib, Seaborn
-* **IDE:** VS Code / Jupyter Notebook
+```bash
+cp .env.example .env
+```
 
-## 🚀 Setup & Installation
+Required variables:
 
-1.  **Clone the repository:**
-    ```bash
-    git clone [https://github.com/yourusername/bengaluru-cost-of-living.git](https://github.com/yourusername/bengaluru-cost-of-living.git)
-    cd bengaluru-cost-of-living
-    ```
+```text
+NODE_ENV=development
+FRONTEND_URL=http://localhost:8080
+VITE_API_URL=http://localhost:3001/api
+PORT=3001
+SUPABASE_URL=your_supabase_project_url
+SUPABASE_SERVICE_ROLE_KEY=your_supabase_service_role_key
+VITE_SUPABASE_URL=your_supabase_project_url
+VITE_SUPABASE_ANON_KEY=your_supabase_anon_key
+```
 
-2.  **Install dependencies:**
-    Ensure you have the required Python libraries installed:
-    ```bash
-    pip install pandas numpy matplotlib seaborn
-    ```
+## Local Development
 
-3.  **Run the Analysis:**
-    Open the main script (or Jupyter Notebook) to see the visualizations:
-    ```bash
-    python main_analysis.py
-    ```
+Install dependencies:
 
-## 📈 Visualizations
+```bash
+npm install
+```
 
-> *Note: Below is a summary of the insights generated by our code.*
+Run the frontend and API server together:
 
-* **Rent vs. Location:** A scatter plot showing the variance in rent across Tier-1 and Tier-2 areas.
-* **Transport Costs:** Analysis of Metro vs. Private vehicle daily commute expenses (e.g., Average ₹66/day for Metro).
-* **Correlation Matrix:** A heatmap highlighting the strong relationship between "Dining Out" frequency and "Total Monthly Savings".
+```bash
+npm run dev
+```
 
-## 🤝 Contribution
+The Vite app runs on:
+
+```text
+http://localhost:8080
+```
+
+The Express API runs on:
+
+```text
+http://localhost:3001
+```
+
+Vite proxies `/api/*` requests to the Express server.
+
+## Team Members
+
+**College**: K.S. School of Engineering and Management
+
+- **[Pranav](https://github.com/toxicbishop)** - 1KG23CB038 (Lead Developer / Data Analyst)
+- **[Rohith R.](https://github.com/Rohithgaloth)** - 1KG23CB044 (Documentation & Analysis)
+- **[Supreeth](https://github.com/supr1795)** - 1KG23CB051 (Visualization & Reporting)
+- **[Syed](https://github.com/Mohammed0572)** - 1KG23CB052 (Data Collection & Research)
+
+## Contribution
 
 This was a collaborative academic project. If you wish to improve the data or add new parameters (e.g., Inflation rates), feel free to fork the repo and submit a Pull Request!
 
----
-**© 2025 K.S. School of Engineering and Management Group Project**
+<div align="center">
+  &copy; 2025 K.S. School of Engineering and Management Group Project
+</div>

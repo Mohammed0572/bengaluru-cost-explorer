@@ -168,7 +168,7 @@ const Auth = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-primary/10 via-secondary/10 to-accent/10 p-4">
+    <div className="min-h-screen flex items-center justify-center bg-background p-4">
       <div className="absolute top-4 left-4">
         <Button
           variant="ghost"
@@ -178,7 +178,7 @@ const Auth = () => {
           Go Back
         </Button>
       </div>
-      <Card className="w-full max-w-md shadow-2xl">
+      <Card className="w-full max-w-md shadow-lg border-border">
         <CardHeader className="text-center">
           <CardTitle className="text-3xl font-bold text-foreground tracking-tight">
             Welcome
