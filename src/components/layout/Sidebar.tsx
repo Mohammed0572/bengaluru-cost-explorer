@@ -46,34 +46,6 @@ export const Sidebar = ({ className }: { className?: string }) => {
         </nav>
       </div>
 
-          {/* Company Links */}
-          <div className="space-y-2">
-            <h4 className="px-3 text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-2">Company</h4>
-            <nav className="space-y-1">
-              {navItems.slice(2, 4).map((item) => {
-                const isActive = location.pathname === item.path;
-                const Icon = item.icon;
-                return (
-                  <Link
-                    key={item.path}
-                    to={item.path}
-                    className={cn(
-                      "flex items-center gap-3 px-3 py-2 rounded-md text-sm font-medium transition-all duration-200 border-l-2",
-                      isActive
-                        ? "bg-primary/10 text-primary border-primary"
-                        : "border-transparent text-muted-foreground hover:bg-muted hover:text-foreground hover:border-border"
-                    )}
-                  >
-                    <Icon className="w-4 h-4" />
-                    {item.name}
-                  </Link>
-                );
-              })}
-            </nav>
-          </div>
-        </div>
-      </div>
-
     </aside>
   );
 };

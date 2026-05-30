@@ -25,3 +25,7 @@ export const generateMockData = (): CostItem[] => {
     { id: "13", category: "Entertainment", item: "Pub Cover Charge", avg_price: 1500, unit: "person", area: "Indiranagar", created_at: "2026-05-13T10:00:00Z" },
   ];
 };
+
+export const fetchCostData = async (): Promise<CostItem[]> => {
+  return generateMockData();
+};
