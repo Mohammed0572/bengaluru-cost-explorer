@@ -78,7 +78,7 @@ export const ContributeForm = ({
         avg_price: priceVal,
         unit: formData.unit,
         area: formData.area || "Bengaluru",
-      } as CostItemInsert);
+      } satisfies CostItemInsert);
 
       if (error) throw error;
 

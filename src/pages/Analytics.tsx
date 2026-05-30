@@ -1,11 +1,11 @@
+import { useState, useEffect, useMemo } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { motion } from "framer-motion";
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, BarChart, Bar } from 'recharts';
-import { generateMockData } from "@/lib/mock-data";
+import { fetchCostData, CostItem } from "@/lib/mock-data";
+import { Loader2 } from "lucide-react";
 
-const data = generateMockData();
-
-// Mock historical trend data for the chart
+// Mock historical trend data for the chart (static — would need time-series data to make dynamic)
 const trendData = [
   { month: 'Jan', housing: 20000, food: 8000, transport: 3000 },
   { month: 'Feb', housing: 20500, food: 8200, transport: 3100 },
@@ -15,15 +15,39 @@ const trendData = [
   { month: 'Jun', housing: 22500, food: 9200, transport: 3600 },
 ];
 
-const categoryData = [
-  { name: 'Housing', avg: 22000 },
-  { name: 'Food', avg: 8500 },
-  { name: 'Transport', avg: 3500 },
-  { name: 'Utilities', avg: 2500 },
-  { name: 'Entertainment', avg: 4000 },
-];
-
 export default function Analytics() {
+  const [data, setData] = useState<CostItem[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetchCostData().then((items) => {
+      setData(items);
+      setLoading(false);
+    });
+  }, []);
+
+  const categoryData = useMemo(() => {
+    const stats: Record<string, { total: number; count: number }> = {};
+    data.forEach((item) => {
+      const cat = item.category;
+      if (!stats[cat]) stats[cat] = { total: 0, count: 0 };
+      stats[cat].total += Number(item.avg_price || 0);
+      stats[cat].count += 1;
+    });
+    return Object.entries(stats)
+      .map(([name, s]) => ({ name, avg: Math.round(s.total / s.count) }))
+      .sort((a, b) => b.avg - a.avg);
+  }, [data]);
+
+  if (loading) {
+    return (
+      <div className="flex h-[60vh] items-center justify-center flex-col gap-4">
+        <Loader2 className="w-10 h-10 animate-spin text-primary" />
+        <p className="text-muted-foreground">Loading analytics...</p>
+      </div>
+    );
+  }
+
   return (
     <motion.div 
       className="space-y-8"

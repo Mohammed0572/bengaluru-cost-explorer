@@ -14,6 +14,45 @@ export type Database = {
   }
   public: {
     Tables: {
+      cost_items: {
+        Row: {
+          id: string
+          category: string
+          item: string
+          min_price: number
+          max_price: number
+          avg_price: number
+          unit: string
+          area: string
+          source: string
+          created_at: string
+        }
+        Insert: {
+          id?: string
+          category: string
+          item: string
+          min_price?: number
+          max_price?: number
+          avg_price?: number
+          unit?: string
+          area?: string
+          source?: string
+          created_at?: string
+        }
+        Update: {
+          id?: string
+          category?: string
+          item?: string
+          min_price?: number
+          max_price?: number
+          avg_price?: number
+          unit?: string
+          area?: string
+          source?: string
+          created_at?: string
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
           created_at: string | null
@@ -35,6 +74,84 @@ export type Database = {
           full_name?: string | null
           id?: string
           updated_at?: string | null
+        }
+        Relationships: []
+      }
+      real_estate: {
+        Row: {
+          id: string
+          area: number
+          location: string
+          bhk: number
+          bath: number
+          property_type: string
+          price: number
+          source: string
+          created_at: string
+        }
+        Insert: {
+          id?: string
+          area: number
+          location: string
+          bhk: number
+          bath: number
+          property_type?: string
+          price: number
+          source?: string
+          created_at?: string
+        }
+        Update: {
+          id?: string
+          area?: number
+          location?: string
+          bhk?: number
+          bath?: number
+          property_type?: string
+          price?: number
+          source?: string
+          created_at?: string
+        }
+        Relationships: []
+      }
+      restaurants: {
+        Row: {
+          id: string
+          name: string
+          address: string | null
+          location: string
+          rating: number | null
+          votes: number
+          cost_for_two: number
+          cuisines: string | null
+          rest_type: string | null
+          source: string
+          created_at: string
+        }
+        Insert: {
+          id?: string
+          name: string
+          address?: string | null
+          location: string
+          rating?: number | null
+          votes?: number
+          cost_for_two?: number
+          cuisines?: string | null
+          rest_type?: string | null
+          source?: string
+          created_at?: string
+        }
+        Update: {
+          id?: string
+          name?: string
+          address?: string | null
+          location?: string
+          rating?: number | null
+          votes?: number
+          cost_for_two?: number
+          cuisines?: string | null
+          rest_type?: string | null
+          source?: string
+          created_at?: string
         }
         Relationships: []
       }
