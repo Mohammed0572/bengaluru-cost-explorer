@@ -10,11 +10,11 @@
 ![DuckDB](https://img.shields.io/badge/DuckDB-FFF000?style=flat&logo=duckdb&logoColor=black)
 ![Supabase](https://img.shields.io/badge/Supabase-3ECF8E?style=flat&logo=supabase&logoColor=white)
 
-A data-driven analysis project examining the cost of living trends in Bengaluru, Karnataka. This project utilizes Python data science libraries to visualize expenses, calculate correlations between lifestyle factors, and provide actionable insights for residents and students.
+A data-driven analysis project examining the cost of living trends in Bengaluru, Karnataka. This project utilizes a React dashboard, Express API, and DuckDB to visualize expenses, calculate correlations between lifestyle factors, and provide actionable insights for residents and students.
 
-An interactive React dashboard for exploring cost-of-living signals across Bengaluru. The app combines crowdsourced-style cost data, neighborhood filters, charts, a lifestyle calculator, restaurant search, real-estate browsing, and a 3D category breakdown.
+An interactive web application for exploring cost-of-living signals across Bengaluru. The app combines crowdsourced-style cost data, neighborhood filters, charts, a lifestyle calculator, restaurant search, real-estate browsing, and a 3D category breakdown.
 
-![Screenshot](assets/costoflivingbenagluru.jpeg)
+![Screenshot](assets/New-costoflivingbenagluru.png)
 
 ## Tech Stack
 
@@ -71,8 +71,6 @@ VITE_SUPABASE_URL=your_supabase_project_url
 VITE_SUPABASE_ANON_KEY=your_supabase_anon_key
 ```
 
-Do not commit `.env`. If real Supabase keys were ever committed, rotate them in Supabase before using this project publicly.
-
 ## Local Development
 
 Install dependencies:
@@ -105,13 +103,15 @@ Vite proxies `/api/*` requests to the Express server.
 
 **College**: K.S. School of Engineering and Management
 
-- **Pranav** (Lead Developer / Data Analyst)
-- **Rohith R.** (Documentation & Analysis)
-- **Supreeth** (Visualization & Reporting)
-- **Syed** (Data Collection & Research)
+- **[Pranav](https://github.com/toxicbishop)** - 1KG23CB038 (Lead Developer / Data Analyst)
+- **[Rohith R.](https://github.com/Rohithgaloth)** - 1KG23CB044 (Documentation & Analysis)
+- **[Supreeth](https://github.com/supr1795)** - 1KG23CB051 (Visualization & Reporting)
+- **[Syed](https://github.com/Mohammed0572)** - 1KG23CB052 (Data Collection & Research)
 
 ## Contribution
 
 This was a collaborative academic project. If you wish to improve the data or add new parameters (e.g., Inflation rates), feel free to fork the repo and submit a Pull Request!
 
-© 2025 K.S. School of Engineering and Management Group Project
+<div align="center">
+  &copy; 2025 K.S. School of Engineering and Management Group Project
+</div>

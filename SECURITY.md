@@ -14,10 +14,10 @@ Use this section to tell people about which versions of your project are current
 Use this section to tell people how to report a vulnerability.
 
 Please report security issues by contacting any of the following maintainers directly:
-- [Rohith](https://github.com/Rohithgaloth)
-- [Syed](https://github.com/Mohammed0572)
-- [Supreeth](https://github.com/supr1795)
 - [Pranav](https://github.com/toxicbishop)
+- [Rohith](https://github.com/Rohithgaloth)
+- [Supreeth](https://github.com/supr1795)
+- [Syed](https://github.com/Mohammed0572)
 
 We will respond within 48 hours and provide updates as we investigate the issue.
 
