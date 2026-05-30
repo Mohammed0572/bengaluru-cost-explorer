@@ -2,7 +2,7 @@ import { useState, useEffect, useCallback } from "react";
 import { Loader2, Home, MapPin, Layers } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { fallbackProperties, filterByLocation, type PropertyListing } from "@/lib/market-data";
+import { fetchProperties, type PropertyListing } from "@/lib/market-data";
 
 type Property = PropertyListing;
 
@@ -14,31 +14,23 @@ export default function RealEstate() {
   const [submittedSearch, setSubmittedSearch] = useState("");
   const [page, setPage] = useState(1);
 
-  const fetchProperties = useCallback(async (area = "", pageNum = 1) => {
+  const loadProperties = useCallback(async (area = "", pageNum = 1) => {
     setLoading(true);
     setError("");
     try {
-      const res = await fetch(`/api/real-estate?area=${encodeURIComponent(area)}&limit=50&page=${pageNum}`);
-      const data = await res.json();
-      if (!res.ok) {
-        throw new Error(data?.error || "Failed to load real estate data");
-      }
-      if (!Array.isArray(data)) {
-        throw new Error("Real estate API returned an unexpected response");
-      }
+      const data = await fetchProperties(area, 50, pageNum);
       setProperties(data);
     } catch (err) {
       console.error(err);
-      setProperties(filterByLocation(fallbackProperties, area));
-      setError("");
+      setError("Failed to load real estate data");
     } finally {
       setLoading(false);
     }
   }, []);
 
   useEffect(() => {
-    fetchProperties(submittedSearch, page);
-  }, [fetchProperties, page, submittedSearch]);
+    loadProperties(submittedSearch, page);
+  }, [loadProperties, page, submittedSearch]);
 
   const handleSearch = () => {
     setSubmittedSearch(search);
