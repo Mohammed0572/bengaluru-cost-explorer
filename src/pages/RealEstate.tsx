@@ -1,32 +1,36 @@
 import { useState, useEffect, useCallback } from "react";
-import { Loader2, Home, MapPin, IndianRupee, Layers } from "lucide-react";
+import { Loader2, Home, MapPin, Layers } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { fallbackProperties, filterByLocation, type PropertyListing } from "@/lib/market-data";
 
-interface Property {
-  area: number;
-  location: string;
-  bhk: number;
-  bath: number;
-  property_type: string;
-  price: number;
-}
+type Property = PropertyListing;
 
 export default function RealEstate() {
   const [properties, setProperties] = useState<Property[]>([]);
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
   const [search, setSearch] = useState("");
   const [submittedSearch, setSubmittedSearch] = useState("");
   const [page, setPage] = useState(1);
 
   const fetchProperties = useCallback(async (area = "", pageNum = 1) => {
     setLoading(true);
+    setError("");
     try {
       const res = await fetch(`/api/real-estate?area=${encodeURIComponent(area)}&limit=50&page=${pageNum}`);
       const data = await res.json();
+      if (!res.ok) {
+        throw new Error(data?.error || "Failed to load real estate data");
+      }
+      if (!Array.isArray(data)) {
+        throw new Error("Real estate API returned an unexpected response");
+      }
       setProperties(data);
     } catch (err) {
       console.error(err);
+      setProperties(filterByLocation(fallbackProperties, area));
+      setError("");
     } finally {
       setLoading(false);
     }
@@ -49,7 +53,7 @@ export default function RealEstate() {
             <Home className="w-8 h-8 text-primary" /> Real Estate Market
           </h1>
           <p className="text-muted-foreground mt-1">
-            Querying raw property sales dataset dynamically
+            Searchable Bengaluru property snapshots
           </p>
         </div>
         <div className="flex items-center gap-2 w-full md:w-auto">
@@ -67,6 +71,10 @@ export default function RealEstate() {
       {loading ? (
         <div className="flex h-64 items-center justify-center">
           <Loader2 className="w-8 h-8 animate-spin text-primary" />
+        </div>
+      ) : error ? (
+        <div className="rounded-lg border border-destructive/30 bg-destructive/10 px-4 py-3 text-sm text-destructive">
+          {error}
         </div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
