@@ -1,7 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
- 
+
 @layer base {
   :root {
     --background: 0 0% 100%;
@@ -25,7 +25,7 @@
     --ring: 173 80% 40%;
     --radius: 0.5rem;
   }
- 
+
   .dark {
     --background: 222 47% 7%; /* Deep Navy */
     --foreground: 210 40% 98%;
@@ -48,7 +48,7 @@
     --ring: 38 92% 50%;
   }
 }
- 
+
 @layer base {
   * {
     @apply border-border;

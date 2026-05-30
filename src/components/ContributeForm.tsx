@@ -1,43 +1,86 @@
 import { useState } from "react";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { Label } from "@/components/ui/label";
 import { PlusCircle, Loader2 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 
-export const ContributeForm = ({ onDataAdded }: { onDataAdded: () => void }) => {
+export const ContributeForm = ({
+  onDataAdded,
+}: {
+  onDataAdded: () => void;
+}) => {
   const [loading, setLoading] = useState(false);
   const { toast } = useToast();
-  
+
   const [formData, setFormData] = useState({
     category: "",
     item: "",
     price: "",
     area: "",
-    unit: "unit"
+    unit: "unit",
   });
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!formData.category || !formData.item || !formData.price) {
-      toast({ title: "Missing fields", description: "Please fill in all required fields.", variant: "destructive" });
+      toast({
+        title: "Missing fields",
+        description: "Please fill in all required fields.",
+        variant: "destructive",
+      });
       return;
     }
 
     setLoading(true);
 
     try {
-      // Simulate network request
-      await new Promise(resolve => setTimeout(resolve, 1000));
+      const { error } = await supabase.from("cost_items" as any).insert({
+        category: formData.category,
+        item: formData.item,
+        min_price: priceVal,
+        max_price: priceVal,
+        avg_price: priceVal,
+        unit: formData.unit,
+        area: formData.area || "Bengaluru",
+      });
 
-      toast({ title: "Success!", description: "Thank you for contributing data." });
-      setFormData({ category: "", item: "", price: "", area: "", unit: "unit" });
-      onDataAdded(); 
+      if (error) throw error;
+
+      toast({
+        title: "Success!",
+        description: "Thank you for contributing data.",
+      });
+      setFormData({
+        category: "",
+        item: "",
+        price: "",
+        area: "",
+        unit: "unit",
+      });
+      onDataAdded();
     } catch (error: any) {
-      toast({ title: "Error", description: "Failed to submit data.", variant: "destructive" });
+      console.error(error);
+      toast({
+        title: "Error",
+        description: error.message || "Failed to submit data.",
+        variant: "destructive",
+      });
     } finally {
       setLoading(false);
     }
@@ -59,8 +102,14 @@ export const ContributeForm = ({ onDataAdded }: { onDataAdded: () => void }) => 
           <div className="grid grid-cols-2 gap-4">
             <div className="space-y-2">
               <Label>Category</Label>
-              <Select value={formData.category} onValueChange={(v) => setFormData({...formData, category: v})}>
-                <SelectTrigger><SelectValue placeholder="Select..." /></SelectTrigger>
+              <Select
+                value={formData.category}
+                onValueChange={(v) =>
+                  setFormData({ ...formData, category: v })
+                }>
+                <SelectTrigger>
+                  <SelectValue placeholder="Select..." />
+                </SelectTrigger>
                 <SelectContent>
                   <SelectItem value="Housing">Housing</SelectItem>
                   <SelectItem value="Food">Food</SelectItem>
@@ -72,21 +121,47 @@ export const ContributeForm = ({ onDataAdded }: { onDataAdded: () => void }) => 
             </div>
             <div className="space-y-2">
               <Label>Area / Location</Label>
-              <Input placeholder="e.g. Indiranagar" value={formData.area} onChange={(e) => setFormData({...formData, area: e.target.value})} />
+              <Input
+                placeholder="e.g. Indiranagar"
+                value={formData.area}
+                onChange={(e) =>
+                  setFormData({ ...formData, area: e.target.value })
+                }
+              />
             </div>
           </div>
           <div className="space-y-2">
             <Label>Item Name</Label>
-            <Input placeholder="e.g. Cold Coffee" value={formData.item} onChange={(e) => setFormData({...formData, item: e.target.value})} />
+            <Input
+              placeholder="e.g. Cold Coffee"
+              value={formData.item}
+              onChange={(e) =>
+                setFormData({ ...formData, item: e.target.value })
+              }
+            />
           </div>
           <div className="grid grid-cols-2 gap-4">
             <div className="space-y-2">
               <Label>Price (₹)</Label>
-              <Input type="number" placeholder="0" value={formData.price} onChange={(e) => setFormData({...formData, price: e.target.value})} min="0" />
+              <Input
+                type="number"
+                placeholder="0"
+                value={formData.price}
+                onChange={(e) =>
+                  setFormData({ ...formData, price: e.target.value })
+                }
+                min="0"
+              />
             </div>
             <div className="space-y-2">
               <Label>Unit</Label>
-              <Input placeholder="e.g. cup, month, kg" value={formData.unit} onChange={(e) => setFormData({...formData, unit: e.target.value})} />
+              <Input
+                placeholder="e.g. cup, month, kg"
+                value={formData.unit}
+                onChange={(e) =>
+                  setFormData({ ...formData, unit: e.target.value })
+                }
+              />
             </div>
           </div>
           <Button type="submit" className="w-full" disabled={loading}>

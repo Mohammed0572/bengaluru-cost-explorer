@@ -9,14 +9,20 @@ export interface DashboardContextType {
   setSearchTerm: (val: string) => void;
 }
 
-export const DashboardLayout = () => {
-  const [searchTerm, setSearchTerm] = useState("");
-
+export const DashboardLayout = ({
+  children,
+  isDarkMode,
+  toggleTheme,
+  searchTerm,
+  setSearchTerm,
+}: DashboardLayoutProps) => {
   return (
     <div className="min-h-screen bg-background text-foreground flex">
       <Sidebar className="hidden md:flex" />
       <div className="flex-1 flex flex-col min-w-0">
-        <Topbar 
+        <Topbar
+          isDarkMode={isDarkMode}
+          toggleTheme={toggleTheme}
           searchTerm={searchTerm}
           setSearchTerm={setSearchTerm}
         />
