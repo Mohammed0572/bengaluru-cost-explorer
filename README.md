@@ -5,7 +5,6 @@
 ![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=flat&logo=tailwind-css&logoColor=white)
 ![React Router](https://img.shields.io/badge/React_Router-CA4245?style=flat&logo=react-router&logoColor=white)
 ![Recharts](https://img.shields.io/badge/Recharts-22B5BF?style=flat)
-![Three.js](https://img.shields.io/badge/Three.js-000000?style=flat&logo=three.js&logoColor=white)
 ![Express](https://img.shields.io/badge/Express-000000?style=flat&logo=express&logoColor=white)
 ![DuckDB](https://img.shields.io/badge/DuckDB-FFF000?style=flat&logo=duckdb&logoColor=black)
 ![Supabase](https://img.shields.io/badge/Supabase-3ECF8E?style=flat&logo=supabase&logoColor=white)
@@ -102,6 +101,7 @@ Vite proxies `/api/*` requests to the Express server.
 ## Data Sets and Sources
 
 This is where I got the data sets and sources:
+
 - [99acres Bengaluru Dataset](https://www.kaggle.com/datasets/rohan2662/99acres-bengaluru-dataset)
 - [House Prices Bangalore 2025](https://www.kaggle.com/datasets/sydsxdiq/house-prices-bangalore2025?hl=en-US)
 - [Zomato Bangalore Dataset](https://www.kaggle.com/datasets/absin7/zomato-bangalore-dataset?hl=en-US)
