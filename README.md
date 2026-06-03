@@ -99,6 +99,15 @@ http://localhost:3001
 
 Vite proxies `/api/*` requests to the Express server.
 
+## Data Sets and Sources
+
+This is where I got the data sets and sources:
+- [99acres Bengaluru Dataset](https://www.kaggle.com/datasets/rohan2662/99acres-bengaluru-dataset)
+- [House Prices Bangalore 2025](https://www.kaggle.com/datasets/sydsxdiq/house-prices-bangalore2025?hl=en-US)
+- [Zomato Bangalore Dataset](https://www.kaggle.com/datasets/absin7/zomato-bangalore-dataset?hl=en-US)
+- [Cost of Living in Bangalore](https://www.numbeo.com/cost-of-living/in/Bangalore?hl=en-US)
+- [OpenCity Data](https://data.opencity.in/?hl=en-US)
+
 ## Team Members
 
 **College**: K.S. School of Engineering and Management
