@@ -6,13 +6,12 @@
 ![React Router](https://img.shields.io/badge/React_Router-CA4245?style=flat&logo=react-router&logoColor=white)
 ![Recharts](https://img.shields.io/badge/Recharts-22B5BF?style=flat)
 ![Express](https://img.shields.io/badge/Express-000000?style=flat&logo=express&logoColor=white)
-![DuckDB](https://img.shields.io/badge/DuckDB-FFF000?style=flat&logo=duckdb&logoColor=black)
 ![Supabase](https://img.shields.io/badge/Supabase-3ECF8E?style=flat&logo=supabase&logoColor=white)
 ![Kaggle](https://img.shields.io/badge/Kaggle-20BEFF?style=flat&logo=Kaggle&logoColor=white)
 
-A data-driven analysis project examining the cost of living trends in Bengaluru, Karnataka. This project utilizes a React dashboard, Express API, and DuckDB to visualize expenses, calculate correlations between lifestyle factors, and provide actionable insights for residents and students.
+A data-driven analysis project examining the cost of living trends in Bengaluru, Karnataka. This project utilizes a React dashboard and Express API to visualize expenses, calculate correlations between lifestyle factors, and provide actionable insights for residents and students.
 
-An interactive web application for exploring cost-of-living signals across Bengaluru. The app combines crowdsourced-style cost data, neighborhood filters, charts, a lifestyle calculator, restaurant search, real-estate browsing, and a 3D category breakdown.
+An interactive web application for exploring cost-of-living signals across Bengaluru. The app combines crowdsourced-style cost data, neighborhood filters, charts, a lifestyle calculator, restaurant search, and real-estate browsing.
 
 ![Screenshot](assets/New-costoflivingbenagluru.png)
 
@@ -22,18 +21,16 @@ An interactive web application for exploring cost-of-living signals across Benga
 - Vite
 - Tailwind CSS + shadcn/ui components
 - React Router
-- Recharts and Three.js
+- Recharts
 - Express API server
-- DuckDB for querying local CSV datasets
 - Supabase client integration for contributed cost items
 
 ## Features
 
 - Dashboard with cost summaries, category charts, recent contributions, and draggable widgets
-- Interactive 3D category breakdown with click-to-filter behavior
 - Neighborhood filtering for cost data
-- Restaurant explorer backed by the local Zomato CSV dataset
-- Real-estate explorer backed by the local house prices CSV dataset
+- Restaurant explorer backed by the local Zomato dataset
+- Real-estate explorer backed by the local house prices dataset
 - Lifestyle calculator for estimating monthly expenses
 - Analytics and area comparison pages
 
@@ -44,8 +41,7 @@ src/                  React app source
 src/components/       Shared UI and dashboard components
 src/pages/            Route-level pages
 src/integrations/     Supabase client and generated types
-server/               Express API and CSV query endpoints
-csv/                  Local datasets used by DuckDB
+server/               Express API endpoints
 public/               Static public assets
 supabase/             Supabase project files and migrations
 ```
