@@ -6,7 +6,6 @@ import { CostDistributionChart } from "@/components/dashboard/CostDistributionCh
 import { RecentContributions } from "@/components/dashboard/RecentContributions";
 import { NeighborhoodSelector } from "@/components/dashboard/NeighborhoodSelector";
 import { ContributeForm } from "@/components/ContributeForm";
-import { ThreeVisualizer } from "@/components/ThreeVisualizer";
 import { Calculator, IndianRupee, TrendingUp, Tags, Loader2, X, Move } from "lucide-react";
 import { fetchCostData, CostItem } from "@/lib/mock-data";
 import type { DashboardContextType } from "@/components/layout/DashboardLayout";
@@ -48,8 +47,7 @@ export default function Index() {
   const defaultLayout: Layout[] = [
     { i: "chart", x: 0, y: 0, w: 7, h: 10, minW: 4, minH: 8 },
     { i: "form", x: 7, y: 0, w: 5, h: 10, minW: 4, minH: 8 },
-    { i: "3d", x: 0, y: 10, w: 12, h: 12, minW: 6, minH: 10 },
-    { i: "grid", x: 0, y: 22, w: 12, h: 12, minW: 6, minH: 10 },
+    { i: "grid", x: 0, y: 10, w: 12, h: 12, minW: 6, minH: 10 },
   ];
 
   const [layouts, setLayouts] = useState<Record<string, Layout[]>>(() => {
@@ -111,7 +109,7 @@ export default function Index() {
     return (
       <div className="h-full min-h-[60vh] flex flex-col items-center justify-center space-y-4">
         <Loader2 className="w-10 h-10 animate-spin text-primary" />
-        <p className="text-muted-foreground animate-pulse">Loading live data from CSV...</p>
+        <p className="text-muted-foreground animate-pulse">Loading live data...</p>
       </div>
     );
   }
@@ -124,8 +122,8 @@ export default function Index() {
       animate="visible"
     >
       {/* Hero Section */}
-      <motion.div variants={itemVariants} className="relative bg-card border rounded-2xl p-8 overflow-hidden shadow-sm">
-        <div className="absolute top-0 right-0 w-64 h-64 bg-primary/10 rounded-full blur-3xl -mr-20 -mt-20 pointer-events-none" />
+      <motion.div variants={itemVariants} className="relative bg-[var(--glass-bg)] backdrop-blur-md border border-[var(--glass-border)] rounded-2xl p-8 overflow-hidden shadow-xl animate-fade-in-up">
+        <div className="absolute top-0 right-0 w-64 h-64 bg-primary/20 rounded-full blur-[80px] -mr-20 -mt-20 pointer-events-none" />
         <div className="relative z-10 max-w-2xl">
           <h1 className="text-4xl md:text-5xl font-bold tracking-tight text-foreground mb-4">
             Real-Time Cost of Living in <span className="text-primary">Bengaluru</span>
@@ -210,8 +208,8 @@ export default function Index() {
           margin={[24, 24]}
         >
           {/* Chart Widget */}
-          <div key="chart" className="bg-card border rounded-2xl shadow-sm flex flex-col h-full overflow-hidden">
-            <div className="drag-handle p-2 border-b bg-muted/20 flex items-center justify-center cursor-grab active:cursor-grabbing hover:bg-muted/50 transition-colors">
+          <div key="chart" className="bg-[var(--glass-bg)] backdrop-blur-md border border-[var(--glass-border)] rounded-2xl shadow-lg flex flex-col h-full overflow-hidden hover:border-primary/40 transition-all duration-300">
+            <div className="drag-handle p-2 border-b border-[var(--glass-border)] bg-muted/20 flex items-center justify-center cursor-grab active:cursor-grabbing hover:bg-muted/40 transition-colors">
               <Move className="w-4 h-4 text-muted-foreground" />
             </div>
             <div className="p-4 flex-1 overflow-auto">
@@ -227,8 +225,8 @@ export default function Index() {
           </div>
 
           {/* Form Widget */}
-          <div key="form" className="bg-card border rounded-2xl shadow-sm flex flex-col h-full overflow-hidden">
-            <div className="drag-handle p-2 border-b bg-muted/20 flex items-center justify-center cursor-grab active:cursor-grabbing hover:bg-muted/50 transition-colors">
+          <div key="form" className="bg-[var(--glass-bg)] backdrop-blur-md border border-[var(--glass-border)] rounded-2xl shadow-lg flex flex-col h-full overflow-hidden hover:border-primary/40 transition-all duration-300">
+            <div className="drag-handle p-2 border-b border-[var(--glass-border)] bg-muted/20 flex items-center justify-center cursor-grab active:cursor-grabbing hover:bg-muted/40 transition-colors">
               <Move className="w-4 h-4 text-muted-foreground" />
             </div>
             <div className="p-6 flex-1 overflow-auto">
@@ -238,28 +236,9 @@ export default function Index() {
             </div>
           </div>
 
-          {/* 3D Visualizer Widget */}
-          <div key="3d" className="bg-card border rounded-2xl shadow-sm flex flex-col h-full overflow-hidden">
-            <div className="drag-handle p-2 border-b bg-muted/20 flex items-center justify-center cursor-grab active:cursor-grabbing hover:bg-muted/50 transition-colors">
-              <Move className="w-4 h-4 text-muted-foreground" />
-            </div>
-            <div className="p-6 flex-1 flex flex-col">
-              <h3 className="text-xl font-semibold mb-1">Interactive 3D Breakdown</h3>
-              <p className="text-xs text-muted-foreground mb-4">Click a bar to filter the table below. Drag to rotate.</p>
-              <div className="flex-1 w-full relative">
-                {filteredItems.length > 0 && (
-                  <ThreeVisualizer 
-                    data={categoryStats.map(stat => ({ name: stat.name, avg: stat.value }))} 
-                    onCategorySelect={setSelectedCategory}
-                  />
-                )}
-              </div>
-            </div>
-          </div>
-
           {/* Data Grid Widget */}
-          <div key="grid" className="bg-card border rounded-2xl shadow-sm flex flex-col h-full overflow-hidden">
-            <div className="drag-handle p-2 border-b bg-muted/20 flex items-center justify-center cursor-grab active:cursor-grabbing hover:bg-muted/50 transition-colors">
+          <div key="grid" className="bg-[var(--glass-bg)] backdrop-blur-md border border-[var(--glass-border)] rounded-2xl shadow-lg flex flex-col h-full overflow-hidden hover:border-primary/40 transition-all duration-300">
+            <div className="drag-handle p-2 border-b border-[var(--glass-border)] bg-muted/20 flex items-center justify-center cursor-grab active:cursor-grabbing hover:bg-muted/40 transition-colors">
               <Move className="w-4 h-4 text-muted-foreground" />
             </div>
             <div className="p-0 flex-1 overflow-auto">
