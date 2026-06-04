@@ -1,7 +1,7 @@
 import { Search, Menu } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { ThemeToggle } from "@/components/ThemeToggle";
+
 
 interface TopbarProps {
   searchTerm: string;
@@ -30,9 +30,7 @@ export const Topbar = ({
         </div>
       </div>
 
-      <div className="flex items-center gap-2">
-        <ThemeToggle />
-      </div>
+
     </header>
   );
 };
