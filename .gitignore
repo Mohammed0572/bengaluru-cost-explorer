@@ -31,3 +31,7 @@ bun.lockb
 CSV
 csv
 *.csv
+
+# Supabase temp and SQL commands
+supabase/.temp/
+*.sql
