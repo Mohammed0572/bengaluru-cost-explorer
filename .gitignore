@@ -35,3 +35,8 @@ csv
 # Supabase temp and SQL commands
 supabase/.temp/
 *.sql
+
+# Python virtual environments
+.venv/
+venv/
+env/
