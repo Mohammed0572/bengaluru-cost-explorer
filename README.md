@@ -114,9 +114,6 @@ pip install -r requirements.txt
 
 # Start Jupyter Notebook
 jupyter notebook notebooks/eda_bengaluru.ipynb
-
-# Update pip
-python.exe -m pip install --upgrade pip
 ```
 
 ### 3. Web Application (Node.js)
