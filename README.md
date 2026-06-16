@@ -46,6 +46,25 @@ public/               Static public assets
 supabase/             Supabase project files and migrations
 ```
 
+## Data Flow Architecture
+
+The project is structured with a clear separation between offline data engineering and the live web application:
+
+```mermaid
+flowchart LR
+    K[Kaggle Datasets] --> P(Python EDA & Cleaning)
+    P --> M((Matplotlib Plots))
+    P -->|Cleaned Data| S[(Supabase PostgreSQL)]
+    S --> E(Express API)
+    E --> R(React Dashboard)
+    R --> C((Recharts UI))
+```
+
+### Visualization Strategy
+
+- **Matplotlib (Jupyter Notebook):** Used for offline data processing, data cleaning, initial exploratory data analysis (EDA), and validating data distributions.
+- **Recharts (React):** Used for the dynamic, interactive visualizations on the frontend dashboard where users can filter by neighborhood and explore the data.
+
 ## Environment Variables
 
 Copy `.env.example` to `.env` and fill in local values:
@@ -67,33 +86,53 @@ VITE_SUPABASE_URL=your_supabase_project_url
 VITE_SUPABASE_ANON_KEY=your_supabase_anon_key
 ```
 
-## Local Development
+## How to Run
 
-Install dependencies:
+### 1. Database Setup (Supabase)
+
+Ensure your `.env` is configured, then push the committed database migrations to your Supabase instance to set up the schema:
+
+```bash
+supabase db push
+```
+
+### 2. Data Pipeline (Python)
+
+If you wish to run the exploratory data analysis and data loading pipeline:
+
+```bash
+# On Windows, you may need to set the execution policy to run the activation script
+Set-ExecutionPolicy Unrestricted -Scope CurrentUser -Force
+
+# Create and activate a virtual environment
+python -m venv .venv
+.\.venv\Scripts\Activate.ps1
+
+# Install Python dependencies
+pip install -r requirements.txt
+
+# Start Jupyter Notebook
+jupyter notebook notebooks/eda_bengaluru.ipynb
+
+# Update pip
+python.exe -m pip install --upgrade pip
+```
+
+### 3. Web Application (Node.js)
+
+Install JavaScript dependencies for both the frontend and the Express backend:
 
 ```bash
 npm install
 ```
 
-Run the frontend and API server together:
+Run the frontend and API server concurrently:
 
 ```bash
 npm run dev
 ```
 
-The Vite app runs on:
-
-```text
-http://localhost:8080
-```
-
-The Express API runs on:
-
-```text
-http://localhost:3001
-```
-
-Vite proxies `/api/*` requests to the Express server.
+The Vite app runs on `http://localhost:8080` and proxies `/api/*` requests to the Express server running on `http://localhost:3001`.
 
 ## API Endpoints
 
