@@ -95,6 +95,24 @@ http://localhost:3001
 
 Vite proxies `/api/*` requests to the Express server.
 
+## API Endpoints
+
+The Express backend provides the following endpoints:
+
+- `GET /api/restaurants`
+  - **Description**: Returns a paginated list of restaurant data.
+  - **Query Parameters**:
+    - `area` (optional): Filter restaurants by location.
+    - `limit` (optional): Number of items per page (default: 50).
+    - `page` (optional): Page number (default: 1).
+
+- `GET /api/real-estate`
+  - **Description**: Returns a paginated list of real-estate properties.
+  - **Query Parameters**:
+    - `area` (optional): Filter properties by location.
+    - `limit` (optional): Number of items per page (default: 50).
+    - `page` (optional): Page number (default: 1).
+
 ## Data Sets and Sources
 
 This is where we got the data sets and sources:

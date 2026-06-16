@@ -5,7 +5,7 @@ import { resolve } from 'path';
 const app = express();
 const port = 3001;
 
-app.use(cors());
+app.use(cors({ origin: process.env.FRONTEND_URL || 'http://localhost:8080' }));
 app.use(express.json());
 
 // No DB initialized
