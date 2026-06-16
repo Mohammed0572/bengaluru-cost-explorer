@@ -9,9 +9,7 @@
 ![Supabase](https://img.shields.io/badge/Supabase-3ECF8E?style=flat&logo=supabase&logoColor=white)
 ![Kaggle](https://img.shields.io/badge/Kaggle-20BEFF?style=flat&logo=Kaggle&logoColor=white)
 
-A data-driven analysis project examining the cost of living trends in Bengaluru, Karnataka. This project utilizes a React dashboard and Express API to visualize expenses, calculate correlations between lifestyle factors, and provide actionable insights for residents and students.
-
-An interactive web application for exploring cost-of-living signals across Bengaluru. The app combines crowdsourced-style cost data, neighborhood filters, charts, a lifestyle calculator, restaurant search, and real-estate browsing.
+An interactive, data-driven web application for exploring the cost of living trends across Bengaluru, Karnataka. The project utilizes a React dashboard and Express API to analyze crowdsourced-style cost data alongside local datasets. It features neighborhood filters, a lifestyle calculator, restaurant search, and real-estate browsing to calculate lifestyle correlations and provide actionable insights for residents and students.
 
 ![Screenshot](assets/New-costoflivingbenagluru.png)
 
@@ -107,6 +105,9 @@ Set-ExecutionPolicy Unrestricted -Scope CurrentUser -Force
 # Create and activate a virtual environment
 python -m venv .venv
 .\.venv\Scripts\Activate.ps1
+
+# Upgrade pip
+python.exe -m pip install --upgrade pip
 
 # Install Python dependencies
 pip install -r requirements.txt
