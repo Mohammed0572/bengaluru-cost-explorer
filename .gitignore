@@ -15,6 +15,8 @@ dist-ssr
 .env.*
 !.env.example
 bun.lockb
+pnpm-lock.yaml
+yarn.lock
 
 # Editor directories and files
 .idea
