@@ -44,19 +44,11 @@ public/               Static public assets
 supabase/             Supabase project files and migrations
 ```
 
-## Data Flow Architecture
+## System Architecture
 
 The project is structured with a clear separation between offline data engineering and the live web application:
 
-```mermaid
-flowchart LR
-    K[Kaggle Datasets] --> P(Python EDA & Cleaning)
-    P --> M((Matplotlib Plots))
-    P -->|Cleaned Data| S[(Supabase PostgreSQL)]
-    S --> E(Express API)
-    E --> R(React Dashboard)
-    R --> C((Recharts UI))
-```
+![System Architecture](assets/Cost%20of%20Living%20in%20Bengaluru%20%E2%80%94%20System%20Architecture.png)
 
 ### Visualization Strategy
 
