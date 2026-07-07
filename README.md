@@ -13,6 +13,7 @@ An interactive, data-driven web application for exploring the cost of living tre
 
 ![Screenshot](assets/New-costoflivingbenagluru.png)
 
+Project URL: https://costinbengaluru.netlify.app/
 ## Tech Stack
 
 - React 18 + TypeScript
