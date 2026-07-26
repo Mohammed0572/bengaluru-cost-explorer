@@ -14,6 +14,7 @@ An interactive, data-driven web application for exploring the cost of living tre
 ![Screenshot](assets/New-costoflivingbenagluru.png)
 
 Project URL: [https://costinbengaluru.netlify.app](https://costinbengaluru.netlify.app)
+
 ## Tech Stack
 
 - React 18 + TypeScript
@@ -47,14 +48,11 @@ supabase/             Supabase project files and migrations
 
 ## System Architecture
 
-The project is structured with a clear separation between offline data engineering and the live web application:
-
 ![System Architecture](assets/Cost%20of%20Living%20in%20Bengaluru%20%E2%80%94%20System%20Architecture.png)
 
 ### Visualization Strategy
 
-- **Matplotlib (Jupyter Notebook):** Used for offline data processing, data cleaning, initial exploratory data analysis (EDA), and validating data distributions.
-- **Recharts (React):** Used for the dynamic, interactive visualizations on the frontend dashboard where users can filter by neighborhood and explore the data.
+- **Recharts (React):** Used for dynamic, interactive visualizations on the frontend dashboard where users can filter by neighborhood and explore the data.
 
 ## Environment Variables
 
@@ -87,29 +85,7 @@ Ensure your `.env` is configured, then push the committed database migrations to
 supabase db push
 ```
 
-### 2. Data Pipeline (Python)
-
-If you wish to run the exploratory data analysis and data loading pipeline:
-
-```bash
-# On Windows, you may need to set the execution policy to run the activation script
-Set-ExecutionPolicy Unrestricted -Scope CurrentUser -Force
-
-# Create and activate a virtual environment
-python -m venv .venv
-.\.venv\Scripts\Activate.ps1
-
-# Upgrade pip
-python.exe -m pip install --upgrade pip
-
-# Install Python dependencies
-pip install -r requirements.txt
-
-# Start Jupyter Notebook
-jupyter notebook notebooks/eda_bengaluru.ipynb
-```
-
-### 3. Web Application (Node.js)
+### 2. Web Application (Node.js)
 
 Install JavaScript dependencies for both the frontend and the Express backend:
 
