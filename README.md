@@ -134,10 +134,9 @@ This is where we got the data sets and sources:
 **College**: K.S. School of Engineering and Management
 
 - **[Pranav](https://github.com/toxicbishop)** - 1KG23CB038 (Lead Developer / Data Analyst)
+- **[Syed](https://github.com/Mohammed0572)** - 1KG23CB052 (Data Collection & Research)
 - **[Rohith R.](https://github.com/Rohithgaloth)** - 1KG23CB044 (Documentation & Analysis)
 - **[Supreeth](https://github.com/supr1795)** - 1KG23CB051 (Visualization & Reporting)
-- **[Syed](https://github.com/Mohammed0572)** - 1KG23CB052 (Data Collection & Research)
-
 ## Contribution
 
 This was a collaborative academic project. If you wish to improve the data or add new parameters (e.g., Inflation rates), feel free to fork the repo and submit a Pull Request!
