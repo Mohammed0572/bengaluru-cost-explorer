@@ -24,8 +24,8 @@ ENV NODE_ENV=production
 ENV PORT=3001
 
 # Copy server dependency manifests and install production dependencies
-COPY server/package.json server/package-lock.json* ./server/
-RUN cd server && npm ci --only=production
+COPY server/package.json server/package-lock.json ./server/
+RUN cd server && npm ci --omit=dev
 
 # Copy server application files
 COPY server/ ./server/
