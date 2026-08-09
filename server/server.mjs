@@ -1,10 +1,21 @@
 import express from 'express';
 import cors from 'cors';
+import rateLimit from 'express-rate-limit';
 import { resolve } from 'path';
 
 const app = express();
-const port = 3001;
+const port = process.env.PORT || 3001;
 
+// Rate limiting middleware to prevent DoS / missing-rate-limiting CodeQL security warnings
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 200, // Limit each IP to 200 requests per 15 minutes
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: { status: 429, message: 'Too many requests from this IP, please try again later.' }
+});
+
+app.use(limiter);
 app.use(cors({ origin: process.env.FRONTEND_URL || 'http://localhost:8080' }));
 app.use(express.json());
 
