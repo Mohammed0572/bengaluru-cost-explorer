@@ -56,6 +56,17 @@ app.get('/api/real-estate', (req, res) => {
   res.json(paginate(filterByLocation(fallbackProperties, area), limit, page));
 });
 
+// Serve static frontend assets if dist folder exists
+const distPath = resolve(process.cwd(), 'dist');
+app.use(express.static(distPath));
+
+app.get('*', (req, res, next) => {
+  if (req.path.startsWith('/api')) return next();
+  res.sendFile(resolve(distPath, 'index.html'), (err) => {
+    if (err) next();
+  });
+});
+
 const server = app.listen(port, () => {
   console.log(`Backend server running on http://localhost:${port}`);
 });

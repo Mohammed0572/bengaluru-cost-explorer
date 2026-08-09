@@ -1,0 +1,15 @@
+node_modules
+server/node_modules
+dist
+.git
+.github
+.gitignore
+.env
+.env.*
+!.env.example
+*.md
+.venv
+venv
+env
+notebooks
+requirements.txt
