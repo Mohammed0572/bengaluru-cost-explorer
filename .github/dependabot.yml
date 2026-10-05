@@ -14,13 +14,6 @@ updates:
       interval: "weekly"
     open-pull-requests-limit: 10
 
-  # Python dependencies (EDA & Data Pipeline)
-  - package-ecosystem: "pip"
-    directory: "/"
-    schedule:
-      interval: "weekly"
-    open-pull-requests-limit: 5
-
   # GitHub Actions Workflows
   - package-ecosystem: "github-actions"
     directory: "/"
