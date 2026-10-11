@@ -40,4 +40,4 @@ Alternatively, you may reach out directly to one of the maintainers:
 
 This is a student/academic project. While we will make a good-faith effort to address reported vulnerabilities, please understand response times may vary based on maintainer availability.
 
-Thank you for helping keep this project and its users safe!
+Thank you for helping keep this project and its users safe.
