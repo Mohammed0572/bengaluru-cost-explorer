@@ -1,7 +1,8 @@
 import express from 'express';
 import cors from 'cors';
 import rateLimit from 'express-rate-limit';
-import { resolve } from 'path';
+import { existsSync } from 'fs';
+import { resolve, sep } from 'path';
 
 const app = express();
 const port = process.env.PORT || 3001;
@@ -73,6 +74,15 @@ app.use(express.static(distPath));
 
 app.get('*', (req, res, next) => {
   if (req.path.startsWith('/api')) return next();
+  const routeSegment = req.path.replace(/^\/+|\/+$/g, '');
+  if (routeSegment) {
+    const routeHtmlPath = resolve(distPath, routeSegment, 'index.html');
+    if (routeHtmlPath.startsWith(`${distPath}${sep}`) && existsSync(routeHtmlPath)) {
+      return res.sendFile(routeHtmlPath, (err) => {
+        if (err) next();
+      });
+    }
+  }
   res.sendFile(resolve(distPath, 'index.html'), (err) => {
     if (err) next();
   });
